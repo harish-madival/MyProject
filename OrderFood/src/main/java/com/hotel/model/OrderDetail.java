@@ -1,5 +1,8 @@
 package com.hotel.model;
 
+
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,15 +10,22 @@ import javax.persistence.Id;
 
 @Entity
 public class OrderDetail {
-	@Id
-	
+	@Id	
 	private int id;
+	
+	private Date ordereddate;
 	private long orderid;
 	private int cartid;
 	private String cartItemName;
 	private String cartPrice;
 	private int userid;
 	
+	public Date getOrdereddate() {
+		return ordereddate;
+	}
+	public void setOrdereddate(Date ordereddate) {
+		this.ordereddate = ordereddate;
+	}
 	
 	public int getId() {
 		return id;

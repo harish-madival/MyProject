@@ -1,5 +1,6 @@
 package com.hotel.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,16 @@ public class OrderFoodDao {
 
 	public List<OrderDetail> getDataByOrderId(long oid) {
 		return this.orderFoodRepo.findByorderid(oid);
+	}
+
+	public List<OrderDetail> getOrderedData() {
+		// TODO Auto-generated method stub
+		return this.orderFoodRepo.findAll();
+	}
+
+	public List<OrderDetail> getdataByDatewise(Date oddDate) {
+		// TODO Auto-generated method stub
+		return this.orderFoodRepo.findByordereddate(oddDate);
 	}
 
 }

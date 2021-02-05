@@ -1,5 +1,6 @@
 package com.hotel.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -118,9 +119,11 @@ public class OrderController {
 			Random rand = new Random();
 			long oid = rand.nextInt(1000);
 			OrderDetail od1;
+			Date date=new Date();
 			od.setOrderid(oid);
 			for (Cart cart : carteddata) {
 				int id=rand.nextInt(1000);
+				od.setOrdereddate(date);
 				od.setId(id);
 				od.setCartid(cart.getId());
 				od.setCartItemName(cart.getItemname());

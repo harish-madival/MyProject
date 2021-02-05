@@ -1,5 +1,6 @@
 package com.hotel.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,16 @@ public class OrderService {
 
 	public List<OrderDetail> getDataByOrderId(long oid) {
 		return this.orderFoodDao.getDataByOrderId(oid);
+	}
+
+	public List<OrderDetail> geOrderedData() {
+		// TODO Auto-generated method stub
+		return this.orderFoodDao.getOrderedData();
+	}
+
+	public List<OrderDetail> getSingleData(Date oddDate) {
+		// TODO Auto-generated method stub
+		return this.orderFoodDao.getdataByDatewise(oddDate);
 	}
 
 

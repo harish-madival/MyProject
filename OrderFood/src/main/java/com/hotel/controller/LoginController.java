@@ -1,5 +1,6 @@
 package com.hotel.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,13 +17,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.hotel.model.OrderDetail;
 import com.hotel.model.User;
+import com.hotel.service.OrderService;
 import com.hotel.service.UserService;
 
 @Controller
 public class LoginController {
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private OrderService orderService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView loginPage(HttpSession session) {
@@ -32,8 +38,14 @@ public class LoginController {
 			int uid = (Integer) session.getAttribute("userid");
 
 			User user = this.userService.getUserData(uid);
-			System.out.println(user);
+			List<OrderDetail> orderddetail=this.orderService.geOrderedData();
+			for (OrderDetail orderDetail : orderddetail) {
+				Date oddDate=orderDetail.getOrdereddate();
+				List<OrderDetail> odd=this.orderService.getSingleData(oddDate);
+			}
+			
 			mdv.addObject("user", user);
+			mdv.addObject("orderddetail", orderddetail);
 			mdv.setViewName("profile");
 			mdv.addObject("title", "Profile");
 		} else {
