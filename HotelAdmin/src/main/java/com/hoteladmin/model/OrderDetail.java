@@ -1,18 +1,39 @@
 package com.hoteladmin.model;
 
+
+import java.util.Date;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class OrderDetail {
-	@Id		
+	@Id	
+	private int id;
+	
+	
+	private Date ordereddate;
 	private long orderid;
 	private int cartid;
 	private String cartItemName;
 	private String cartPrice;
 	private int userid;
 	
+	public Date getOrdereddate() {
+		return ordereddate;
+	}
+	public void setOrdereddate(Date ordereddate) {
+		this.ordereddate = ordereddate;
+	}
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public OrderDetail() {		
 	}
 	public long getOrderid() {
@@ -47,8 +68,8 @@ public class OrderDetail {
 	}
 	@Override
 	public String toString() {
-		return "OrderDetail [orderid=" + orderid + ", cartid=" + cartid + ", cartItemName=" + cartItemName
-				+ ", cartPrice=" + cartPrice + ", userid=" + userid + "]";
+		return "OrderDetail [id=" + id + ", orderid=" + orderid + ", cartid=" + cartid + ", cartItemName="
+				+ cartItemName + ", cartPrice=" + cartPrice + ", userid=" + userid + "]";
 	}	
 	
 	
