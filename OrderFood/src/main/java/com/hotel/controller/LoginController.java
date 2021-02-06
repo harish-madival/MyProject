@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,11 +39,8 @@ public class LoginController {
 			int uid = (Integer) session.getAttribute("userid");
 
 			User user = this.userService.getUserData(uid);
-			List<OrderDetail> orderddetail=this.orderService.geOrderedData();
-			for (OrderDetail orderDetail : orderddetail) {
-				Date oddDate=orderDetail.getOrdereddate();
-				List<OrderDetail> odd=this.orderService.getSingleData(oddDate);
-			}
+			List<OrderDetail> orderddetail=this.orderService.geOrderedData(uid);
+			
 			
 			mdv.addObject("user", user);
 			mdv.addObject("orderddetail", orderddetail);
@@ -127,5 +125,79 @@ public class LoginController {
 
 		modelAndView.addObject("title", "Register");
 		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/profileedit", method = RequestMethod.GET)
+	public ModelAndView editProfile(HttpSession session) {
+
+		ModelAndView mdv = new ModelAndView("profileedit");
+		
+		if (session.getAttribute("email") != null) {
+			int uid = (Integer) session.getAttribute("userid");
+
+			User user = this.userService.getUserData(uid);
+			mdv.addObject("user", user);
+			
+			mdv.setViewName("profileedit");
+			mdv.addObject("title", "EditProfile");
+		} else {
+			mdv.setViewName("login");
+			mdv.addObject("title", "Login");
+		}
+		
+		return mdv;
+	}
+	
+	@RequestMapping(value = "/updateprofile", method = RequestMethod.POST)
+	public ModelAndView updateProfile(HttpSession session,@Valid @ModelAttribute("u") User u, BindingResult result) {
+
+		ModelAndView mdv = new ModelAndView("profile");
+		
+		if (session.getAttribute("email") != null) {
+			int uid = (Integer) session.getAttribute("userid");
+			
+//			if (result.hasErrors()) {
+//				mdv.setViewName("profileedit");
+//				return mdv;
+//			}
+			
+			User user = this.userService.getUserData(uid);
+			user.setFullName(u.getFullName());
+			user.setUsername(u.getUsername());
+			user.setMobile(u.getMobile());
+			user.setEmailid(u.getEmailid());
+			
+			User updatedata=this.userService.updateData(user);
+			mdv.addObject("user", updatedata);
+			mdv.setViewName("profile");
+			
+		} else {
+			mdv.setViewName("login");
+			mdv.addObject("title", "Login");
+		}
+		
+		return mdv;
+	}
+	
+	@RequestMapping(value = "/deleteAccount", method = RequestMethod.GET)
+	public ModelAndView deleteAccount(HttpSession session) {
+
+		ModelAndView mdv = new ModelAndView("register");
+		
+		if (session.getAttribute("email") != null) {
+			int uid = (Integer) session.getAttribute("userid");
+
+			this.userService.deleteUser(uid);
+			session.removeAttribute("userid");
+			session.invalidate();
+			mdv.addObject("deletestatus", "Account deleted successfully");
+			mdv.setViewName("register");
+			mdv.addObject("title", "register");
+		} else {
+			mdv.setViewName("login");
+			mdv.addObject("title", "Login");
+		}
+		
+		return mdv;
 	}
 }

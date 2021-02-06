@@ -26,13 +26,7 @@ pageEncoding="UTF-8"%>
 	</div>
 	<div class="row">
 		<div class="col-sm-3">
-			<!--left col-->
 
-
-
-
-
-<!-- //hhhhhhhhhhhhhhhhh -->
 			<div class="text-center">
 				<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
 					class="avatar img-circle img-thumbnail" alt="avatar">
@@ -54,8 +48,8 @@ pageEncoding="UTF-8"%>
 		<div class="col-sm-9">
 
 			<ul class="nav nav-tabs" role="tablist">
-				<li class="nav-item active"><a class="nav-link active"
-					href="#home" role="tab" data-toggle="tab">Profile</a></li>
+				<li class="nav-item"><a class="nav-link" href="#home"
+					role="tab" data-toggle="tab">Profile</a></li>
 				<li class="nav-item"><a class="nav-link" href="#orders"
 					role="tab" data-toggle="tab">My Orders</a></li>
 

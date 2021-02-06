@@ -17,7 +17,7 @@ public class OrderDetail {
 	private long orderid;
 	private int cartid;
 	private String cartItemName;
-	private String cartPrice;
+	private long cartPrice;
 	private int userid;
 	
 	public Date getOrdereddate() {
@@ -53,10 +53,10 @@ public class OrderDetail {
 	public void setCartItemName(String cartItemName) {
 		this.cartItemName = cartItemName;
 	}
-	public String getCartPrice() {
+	public long getCartPrice() {
 		return cartPrice;
 	}
-	public void setCartPrice(String cartPrice) {
+	public void setCartPrice(long cartPrice) {
 		this.cartPrice = cartPrice;
 	}
 	public int getUserid() {

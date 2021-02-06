@@ -24,9 +24,9 @@ public class OrderService {
 		return this.orderFoodDao.getDataByOrderId(oid);
 	}
 
-	public List<OrderDetail> geOrderedData() {
+	public List<OrderDetail> geOrderedData(int uid) {
 		// TODO Auto-generated method stub
-		return this.orderFoodDao.getOrderedData();
+		return this.orderFoodDao.getOrderedData(uid);
 	}
 
 	public List<OrderDetail> getSingleData(Date oddDate) {

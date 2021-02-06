@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -60,9 +61,14 @@ public class OrderController {
 	@RequestMapping("/cart")
 	public String cartedItems(Model m, HttpServletRequest req, HttpSession session) {
 		System.out.println(session.getAttribute("email"));
+		long subtotal=0;
 		if (session.getAttribute("email") != null) {
 			int uid = (Integer) session.getAttribute("userid");
 			List<Cart> carteddata = this.cartService.getAllCartedDataByUid(uid);
+			for (Cart cart : carteddata) {
+				subtotal=subtotal+cart.getTotalprice();
+			}
+			m.addAttribute("subtotal", subtotal);
 			m.addAttribute("carteddata", carteddata);
 			m.addAttribute("title", "cart");
 		} else {
@@ -73,24 +79,26 @@ public class OrderController {
 	}
 
 	@RequestMapping("/cart/{id}")
-	public RedirectView cartedItem(@PathVariable("id") int id, Model m, HttpServletRequest req, HttpSession session) {
+	public RedirectView cartedItem(@ModelAttribute("cart") Cart cart,@PathVariable("id") int id, Model m, HttpServletRequest req, HttpSession session) {
 		RedirectView rdview = new RedirectView();
-		System.out.println(session.getAttribute("email"));
+		long totalprice;
+		long subtotal=0;
 		if (session.getAttribute("email") != null) {
-
 			FoodItems food = this.foodItemService.getdata(id);
 			int uid = (Integer) session.getAttribute("userid");
-			// Random rand = new Random();
-			// int cid = rand.nextInt(1000);
-			Cart cart = new Cart();
-			cart.setId(food.getId());
+			Random rand = new Random();
+			int cid = rand.nextInt(1000);			
+			cart.setId(cid);
 			cart.setItemname(food.getItemname());
-
 			cart.setPrice(food.getPrice());
 			cart.setUserid(uid);
-			m.addAttribute("title", "cart");
-			rdview.setUrl(req.getContextPath() + "/cart");
+			totalprice=(Integer.parseInt(cart.getPrice())) * cart.getQuantity();
+			cart.setTotalprice(totalprice);
+			subtotal=subtotal+totalprice;
+			m.addAttribute("subtotal", subtotal);
+			m.addAttribute("title", "cart");			
 			this.cartService.addtocart(cart);
+			rdview.setUrl(req.getContextPath() + "/cart");
 
 		} else {
 			rdview.setUrl(req.getContextPath() + "/login");
@@ -127,7 +135,7 @@ public class OrderController {
 				od.setId(id);
 				od.setCartid(cart.getId());
 				od.setCartItemName(cart.getItemname());
-				od.setCartPrice(cart.getPrice());
+				od.setCartPrice(cart.getTotalprice());
 				od.setUserid(cart.getUserid());
 				od1 = this.orderService.addOrderedData(od);
 				if (od1 != null) {
@@ -146,7 +154,7 @@ public class OrderController {
 			m.addAttribute("orderDetail", data);
 			int total_amount=0;
 			for (OrderDetail orderDetail : data) {
-				total_amount=total_amount+Integer.parseInt(orderDetail.getCartPrice());
+				total_amount=total_amount+(int)(orderDetail.getCartPrice());
 			}
 			m.addAttribute("totalamount", total_amount);
 			rv.setViewName("ordertoken");

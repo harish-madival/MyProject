@@ -39,6 +39,14 @@ public class UserService {
 		return this.userDao.getAllUserData();
 	}
 
+	public User updateData(User user) {
+		return this.userDao.updateData(user);
+	}
+
+	public void deleteUser(int uid) {
+		this.userDao.deleteUser(uid);
+	}
+
 	
 	
 

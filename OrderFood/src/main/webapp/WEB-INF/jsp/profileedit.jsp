@@ -41,22 +41,6 @@
 				<br>
 
 
-
-
-
-				<ul class="list-group">
-					<li class="list-group-item text-muted">Activity <i
-						class="fas fa-tachometer-alt-slow"></i>
-					<li class="list-group-item text-right"><span class="pull-left"><strong>Shares</strong></span>
-						125</li>
-					<li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span>
-						13</li>
-					<li class="list-group-item text-right"><span class="pull-left"><strong>Posts</strong></span>
-						37</li>
-					<li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span>
-						78</li>
-				</ul>
-
 				<div class="panel panel-default">
 					<div class="panel-heading">Social Media</div>
 					<div class="panel-body">
@@ -72,8 +56,7 @@
 				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item active"><a class="nav-link active"
 						href="#home" role="tab" data-toggle="tab">Profile</a></li>
-					<li class="nav-item"><a class="nav-link" href="#orders"
-						role="tab" data-toggle="tab">My Orders</a></li>
+					
 
 				</ul>
 
@@ -81,7 +64,7 @@
 				<div class="tab-content">
 					<div class="tab-pane active" id="home">
 						<hr>
-						<form class="form" action="##" method="post" id="registrationForm">
+						<form class="form" action="updateprofile" method="post" id="updateform">
 							<div class="form-group">
 
 								<div class="col-xs-6">
@@ -89,6 +72,15 @@
 										type="text" class="form-control" name="fullName"
 										id="fullName" placeholder="Full Name"
 										title="enter your first name if any." value="${user.fullName}">
+								</div>
+							</div>
+							<div class="form-group">
+
+								<div class="col-xs-6">
+									<label for="username"><h4>Username</h4></label> <input
+										type="text" class="form-control" name="username"
+										id="username" placeholder="Full Name"
+										title="enter your first name if any." value="${user.username}">
 								</div>
 							</div>
 							<div class="form-group">
@@ -110,32 +102,12 @@
 								</div>
 							</div>
 							
-							<div class="form-group">
-
-								<div class="col-xs-6">
-									<label for="userpassword"><h4>Password</h4></label> <input
-										type="password" class="form-control" name="userpassword"
-										id="userpassword" placeholder="password"
-										title="enter your password." value="${user.userpassword}">
-								</div>
-							</div>
-							<div class="form-group">
-
-								<div class="col-xs-6">
-									<label for="confirmpassword"><h4>Repeat Password</h4></label> <input
-										type="password" class="form-control" name="confirmpassword"
-										id="confirmpassword" placeholder="Repeat Password"
-										title="enter your password2.">
-								</div>
-							</div>
+							
 							<div class="form-group">
 								<div class="col-xs-12">
 									<br>
 									<button class="btn btn-lg btn-success" type="submit">
-										<i class="glyphicon glyphicon-ok-sign"></i> Save
-									</button>
-									<button class="btn btn-lg" type="reset">
-										<i class="glyphicon glyphicon-repeat"></i> Reset
+										<i class="glyphicon glyphicon-ok-sign"></i> Update
 									</button>
 								</div>
 							</div>

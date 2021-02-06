@@ -12,7 +12,9 @@ public class Cart {
 	private int id;
 	private int userid;
 	private String itemname;
+	private int quantity;
 	private String price;
+	private long totalprice;
 	
 	@ManyToOne
 	private User user;
@@ -23,6 +25,12 @@ public class Cart {
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public long getTotalprice() {
+		return totalprice;
+	}
+	public void setTotalprice(long totalprice) {
+		this.totalprice = totalprice;
 	}
 	public int getUserid() {
 		return userid;
@@ -45,6 +53,12 @@ public class Cart {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 	public String getItemname() {
 		return itemname;
 	}
@@ -59,8 +73,8 @@ public class Cart {
 	}
 	@Override
 	public String toString() {
-		return "Cart [id=" + id + ", userid=" + userid + ", itemname=" + itemname + ", price=" + price + ", user="
-				+ user + "]";
+		return "Cart [id=" + id + ", userid=" + userid + ", itemname=" + itemname + ", quantity=" + quantity
+				+ ", price=" + price + ", totalprice=" + totalprice + ", user=" + user + "]";
 	}
 	
 	

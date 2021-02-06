@@ -53,6 +53,14 @@ public class UserDao {
 		return this.userrepo.findAll();
 	}
 
+	public User updateData(User user) {
+		return this.userrepo.saveAndFlush(user);
+	}
+
+	public void deleteUser(int uid) {
+		this.userrepo.deleteById(uid);		
+	}
+
 	
 
 	

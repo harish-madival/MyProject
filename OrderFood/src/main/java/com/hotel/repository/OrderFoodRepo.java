@@ -13,4 +13,6 @@ public interface OrderFoodRepo extends JpaRepository<OrderDetail, Integer> {
 
 	List<OrderDetail> findByordereddate(Date oddDate);
 
+	List<OrderDetail> findByUserid(int uid);
+
 }

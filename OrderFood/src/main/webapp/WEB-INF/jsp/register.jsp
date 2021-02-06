@@ -53,6 +53,7 @@
 	<div class="container">
 		<br>
 		<div class="bg-success">${registrationStatus}</div>
+		<div class="bg-danger"> ${deletestatus}</div>
 		<div class="card bg-light">
 			<article class="card-body mx-auto" style="max-width: 400px;">
 				<h4 class="card-title mt-3 text-center">Create Account</h4>

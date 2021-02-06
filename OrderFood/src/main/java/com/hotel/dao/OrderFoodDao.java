@@ -23,9 +23,9 @@ public class OrderFoodDao {
 		return this.orderFoodRepo.findByorderid(oid);
 	}
 
-	public List<OrderDetail> getOrderedData() {
+	public List<OrderDetail> getOrderedData(int uid) {
 		// TODO Auto-generated method stub
-		return this.orderFoodRepo.findAll();
+		return this.orderFoodRepo.findByUserid(uid);
 	}
 
 	public List<OrderDetail> getdataByDatewise(Date oddDate) {
