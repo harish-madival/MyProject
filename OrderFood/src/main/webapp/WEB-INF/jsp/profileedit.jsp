@@ -18,6 +18,8 @@
 			<div class="col-sm-10">
 				<h1>User name</h1>
 			</div>
+			
+			
 			<div class="col-sm-2">
 				<a href="/users" class="pull-right"><img title="profile image"
 					class="img-circle img-responsive"
