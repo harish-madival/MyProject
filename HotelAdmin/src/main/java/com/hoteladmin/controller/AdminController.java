@@ -1,6 +1,7 @@
 package com.hoteladmin.controller;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,18 @@ public class AdminController {
 	public ModelAndView orderDetail(Model m) {
 		ModelAndView mv=new ModelAndView("orderdetail");
 		List<OrderDetail> ordereddata=this.orderservice.getOrderedData();
-		//Collections.sort(ordereddata, Collections.reverseOrder());
+		
+		Comparator<OrderDetail> byorderedadate = new Comparator<OrderDetail>() {
+		      public int compare(OrderDetail c1, OrderDetail c2) {
+		        return Integer.valueOf(c1.getOrdereddate().compareTo(c2.getOrdereddate()));
+		      }
+		    };
+		    
+		        Collections.sort(ordereddata, byorderedadate.reversed());
+		        
+		    for(int i=0; i<ordereddata.size(); i++) {
+		      System.out.println(ordereddata.get(i));  
+		    }
 		mv.addObject("ordereddata",ordereddata);
 		System.out.println(ordereddata);
 		m.addAttribute("title", "ordered");

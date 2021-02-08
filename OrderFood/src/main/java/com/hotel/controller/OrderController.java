@@ -128,6 +128,7 @@ public class OrderController {
 			long oid = rand.nextInt(1000);
 			OrderDetail od1;
 			Date date=new Date();
+			System.out.println("date:"+date);
 			od.setOrderid(oid);
 			for (Cart cart : carteddata) {
 				int id=rand.nextInt(1000);
@@ -137,7 +138,9 @@ public class OrderController {
 				od.setCartItemName(cart.getItemname());
 				od.setCartPrice(cart.getTotalprice());
 				od.setUserid(cart.getUserid());
+				System.out.println(od);
 				od1 = this.orderService.addOrderedData(od);
+				System.out.println("database data"+od1);
 				if (od1 != null) {
 					this.cartService.deleteData(cart.getId());
 				} else {
