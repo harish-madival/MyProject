@@ -11,23 +11,6 @@
 	<header>
 		<%@include file="nav.jsp"%>
 	</header>
-	<%-- 
-	<div>${buystatus}</div>
-	<c:forEach items="${carteddata }" var="cd">
-	<div class="card" style="width: 18rem;">
-		<img class="card-img-top" src="..." alt="Card image cap">
-		<div class="card-body">
-			<h5 class="card-title"> ${cd.itemname}</h5>
-			<p class="card-text">Price: ${cd.price}</p>
-			<a href="${pageContext.request.contextPath }/selectveg" class="btn btn-primary">Order More</a>
-			<a href="${pageContext.request.contextPath }/delete/${cd.id}" class="btn btn-gray">Delete</a>
-		</div>
-	</div>
-	</c:forEach>
-	<button class="btn btn-dark mt-3"> <a href="buy">BuyOrder</a>  </button> --%>
-
-
-
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-10 col-md-offset-1">

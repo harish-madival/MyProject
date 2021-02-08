@@ -5,9 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <style type="text/css">
-body {
-	margin-top: 20px;
-}
+
 /*
 Foods menu
 */
@@ -82,103 +80,7 @@ Foods menu
 	<header>
 		<%@include file="nav.jsp"%>
 	</header>
-	<%-- <div class="container">
-		<div class="col-md-8 offset-md-2 ">
-			<h1 class="mt-2">Welcome to User</h1>
-
-			<div class="list-group">
-				<a href="selectveg"
-					class="list-group-item list-group-item-action active">Veg</a> <a
-					href="selectnonveg" class="list-group-item list-group-item-action">Non-Veg</a>
-
-			</div>
-			<div class="mt-2" style="background-color: lightgray">
-
-				<c:if test="${select=='veg'}">				
-					<table class="table table-sm">
-						<thead>
-							<tr>
-								<th scope="col">Sl No.</th>
-								<th scope="col">Item Name</th>
-								<th scope="col">Price</th>
-								<th scope="col">Quantity</th>
-								<th scope="col"></th>
-
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${list}" var="list">
-							<form action="cart/${list.id}">
-							
-								<tr>
-									<th scope="row">${list.id}</th>
-									<td>${list.itemname}</td>
-									<td>${list.price}</td>
-									<td><select name="quantity" id="quamtity">
-											<option value=1>1</option>
-											<option value=2>2</option>
-											<option value=3>3</option>
-											<option value=4>4</option>
-											<option value=5>5</option>
-											<option value=6>6</option>
-											<option value=7>7</option>
-											<option value=8>8</option>
-											
-									</select></td>
-									<td><input type="submit" value="Add"></td>
-								</tr>
-							</form>
-								
-							</c:forEach>
-						</tbody>
-					</table>
-
-				</c:if>
-				<c:if test="${select=='nonveg'}">
-					<table class="table table-sm">
-						<thead>
-							<tr>
-								<th scope="col">Sl No.</th>
-								<th scope="col">Item Name</th>
-								<th scope="col">Price</th>
-								<th scope="col">Quantity</th>
-								<th scope="col"></th>
-							</tr>
-						</thead>
-
-						<tbody>
-
-							<c:forEach items="${list}" var="list">
-								<form action="cart/${list.id}">
-							
-								<tr>
-									<th scope="row">${list.id}</th>
-									<td>${list.itemname}</td>
-									<td>${list.price}</td>
-									<td><select name="quantity" id="quamtity">
-											<option value=1>1</option>
-											<option value=2>2</option>
-											<option value=3>3</option>
-											<option value=4>4</option>
-											<option value=5>5</option>
-											<option value=6>6</option>
-											<option value=7>7</option>
-											<option value=8>8</option>
-											
-									</select></td>
-									<td><input type="submit" value="Add"></td>
-								</tr>
-							</form>
-							</c:forEach>
-						</tbody>
-					</table>
-
-				</c:if>
-
-
-			</div>
-		</div>
-	</div> --%>
+	
 	<div class="container">
 		<div class="mt-4">
 			<h2 class="text-center">Our Food Menu</h2>
@@ -189,152 +91,58 @@ Foods menu
 				<ul class="nav  tabs-menu-nav justify-content-center mb30"
 					role="tablist">
 					<li class="nav-item" role="presentation"><a
-						class="nav-link active show" href="#veg"
-						aria-controls="veg" role="tab" data-toggle="tab"
-						aria-selected="true">Veg</a></li>
-					<li class="nav-item" role="presentation"><a class="nav-link"
-						href="#nonveg" aria-controls="nonveg" role="tab" data-toggle="tab"
-						aria-selected="false"> Non-Veg</a></li>
-					
+						class="nav-link active show"
+						href="selectveg">Veg</a></li>
+					<li class="nav-item" role="presentation"><a
+						class="nav-link active show"
+						href="selectnonveg">Non-Veg</a></li>
 				</ul>
 
 				<!-- Tab panes -->
-				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane fade active show"
-						id="veg">
-						<div class="row">
-						<c:forEach items="${list}" var="list">
-							<div class="col-md-6 mb20">
-								<article class="media">
-									<!-- Article Image -->
-									<a class="g-width-100" href="#"> <img
-										class="img-fluid mr-4" width="80"
-										src="http://bootstraplovers.com/assan-kit-3.8/bootstrap4/website-templates/classic-template/html/images/resto/food1.jpg"
-										alt="Menu title">
-									</a>
-									<!--Image -->
-									<!--Content -->
-									
-									<div class="media-body align-self-center g-pl-10">
-										<div class="d-flex justify-content-between mb10">
-											<h3
-												class="align-self-center text-capitalize mb0 h6 text-white font400">${list.itemname}
-												title</h3>
 
-											<div class="align-self-center">
-												<strong class="text-white font700">${list.price}</strong>
-											</div>
-										</div>
+				<div class="row mt-3">
+					<div class="col-md-6 offset-md-3 mb20">
+						<table class="table table-hover text-white">
+							<thead>
+								<tr>
+									<th scope="col"></th>
+									<th scope="col">Item Name</th>
+									<th scope="col">Price</th>
+									<th scope="col">Quantity</th>
+									<th scope="col"></th>
 
-										<p class="mb-0">Lorem ipsum dolor sit amet, consectetur
-											adipiscing elit.</p>
-									</div>
-									
-									<!--/Content -->
-								</article>
-								<!--/Article -->
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${list}" var="list">
+									<form action="cart/${list.id}">
 
+										<tr>
+											<th scope="row"><img alt="img1" src=""></th>
+											<td>${list.itemname}</td>
+											<td>${list.price}</td>
+											<td><select name="quantity" id="quantity">
+													<option value=1>1</option>
+													<option value=2>2</option>
+													<option value=3>3</option>
+													<option value=4>4</option>
+													<option value=5>5</option>
+													<option value=6>6</option>
+													<option value=7>7</option>
+													<option value=8>8</option>
 
-							</div>
-							<div class="col-md-6 mb20">
-								<article class="media">
-									<!-- Article Image -->
-									<a class="g-width-100" href="#"> <img
-										class="img-fluid mr-4" width="80"
-										src="http://bootstraplovers.com/assan-kit-3.8/bootstrap4/website-templates/classic-template/html/images/resto/food6.jpg"
-										alt="Menu title">
-									</a>
-									<!--Image -->
-									<!--Content -->
-									<c:forEach items="${list}" var="list"></c:forEach>
-									<div class="media-body align-self-center g-pl-10">
-										<div class="d-flex justify-content-between mb10">
-											<h3
-												class="align-self-center text-capitalize mb0 h6 text-white font400">Menu
-												title</h3>
+											</select></td>
+											<td><input type="submit" value="Add"></td>
+										</tr>
+									</form>
 
-											<div class="align-self-center">
-												<strong class="text-white font700">$1.20</strong>
-											</div>
-										</div>
+								</c:forEach>
+							</tbody>
+						</table>
 
-										<p class="mb-0">Lorem ipsum dolor sit amet, consectetur
-											adipiscing elit.</p>
-									</div>
-									
-									<!--/Content -->
-								</article>
-								<!--/Article -->
-
-							</div>
-						</div>
-						</c:forEach>
 					</div>
-					<div role="tabpanel" class="tab-pane fade" id="nonveg">
-						<div class="row">
-							<div class="col-md-6 mb20">
-								<article class="media">
-									<!-- Article Image -->
-									<a class="g-width-100" href="#"> <img
-										class="img-fluid mr-4" width="80"
-										src="http://bootstraplovers.com/assan-kit-3.8/bootstrap4/website-templates/classic-template/html/images/resto/food10.jpg"
-										alt="Menu title">
-									</a>
-									<!--Image -->
-									<!--Content -->
-									<div class="media-body align-self-center g-pl-10">
-										<div class="d-flex justify-content-between mb10">
-											<h3
-												class="align-self-center text-capitalize mb0 h6 text-white font400">Menu
-												title</h3>
-
-											<div class="align-self-center">
-												<strong class="text-white font700">$1.20</strong>
-											</div>
-										</div>
-
-										<p class="mb-0">Lorem ipsum dolor sit amet, consectetur
-											adipiscing elit.</p>
-									</div>
-									<!--/Content -->
-								</article>
-								<!--/Article -->
-
-							</div>
-							<div class="col-md-6 mb20">
-								<article class="media">
-									<!-- Article Image -->
-									<a class="g-width-100" href="#"> <img
-										class="img-fluid mr-4" width="80"
-										src="http://bootstraplovers.com/assan-kit-3.8/bootstrap4/website-templates/classic-template/html/images/resto/food5.jpg"
-										alt="Menu title">
-									</a>
-									<!--Image -->
-									<!--Content -->
-									<div class="media-body align-self-center g-pl-10">
-										<div class="d-flex justify-content-between mb10">
-											<h3
-												class="align-self-center text-capitalize mb0 h6 text-white font400">Menu
-												title</h3>
-
-											<div class="align-self-center">
-												<strong class="text-white font700">$1.20</strong>
-											</div>
-										</div>
-
-										<p class="mb-0">Lorem ipsum dolor sit amet, consectetur
-											adipiscing elit.</p>
-									</div>
-									<!--/Content -->
-								</article>
-								<!--/Article -->
-
-
-							</div>
-						</div>
-					</div>
-					
 				</div>
+
 			</div>
 		</div>
 	</div>

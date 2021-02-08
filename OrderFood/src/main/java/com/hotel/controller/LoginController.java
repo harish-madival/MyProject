@@ -1,7 +1,9 @@
 package com.hotel.controller;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -23,6 +25,8 @@ import com.hotel.model.User;
 import com.hotel.service.OrderService;
 import com.hotel.service.UserService;
 
+import antlr.TreeParserSharedInputState;
+
 @Controller
 public class LoginController {
 	@Autowired
@@ -40,7 +44,7 @@ public class LoginController {
 
 			User user = this.userService.getUserData(uid);
 			List<OrderDetail> orderddetail=this.orderService.geOrderedData(uid);
-			
+			//Collections.sort(orderddetail, Collections.reverseOrder()); 
 			
 			mdv.addObject("user", user);
 			mdv.addObject("orderddetail", orderddetail);

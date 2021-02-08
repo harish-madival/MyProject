@@ -52,7 +52,6 @@ pageEncoding="UTF-8"%>
 					role="tab" data-toggle="tab">Profile</a></li>
 				<li class="nav-item"><a class="nav-link" href="#orders"
 					role="tab" data-toggle="tab">My Orders</a></li>
-
 			</ul>
 
 

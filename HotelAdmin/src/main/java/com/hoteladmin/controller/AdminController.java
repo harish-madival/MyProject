@@ -1,5 +1,6 @@
 package com.hoteladmin.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,7 @@ public class AdminController {
 	public ModelAndView orderDetail(Model m) {
 		ModelAndView mv=new ModelAndView("orderdetail");
 		List<OrderDetail> ordereddata=this.orderservice.getOrderedData();
+		//Collections.sort(ordereddata, Collections.reverseOrder());
 		mv.addObject("ordereddata",ordereddata);
 		System.out.println(ordereddata);
 		m.addAttribute("title", "ordered");

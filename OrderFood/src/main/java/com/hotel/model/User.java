@@ -40,6 +40,7 @@ public class User {
 	@Size(min=6,message="Usrname must be at least 6 character")	
 	private String username;
 	
+	@Size(min=6,message="Usrname must be at least 6 character")
 	@NotEmpty(message = "Field should not be Empty")	
 	private String userpassword;
 	
