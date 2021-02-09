@@ -7,7 +7,7 @@
 <div class=" col-sm-4 col-md col-sm-4  col-12 col">
 <h5 class="headin5_amrc col_white_amrc pt2">Find us</h5>
 <!--headin5_amrc-->
-<p class="mb10">RCART Restorent Services provides boy order from the table. Its started in ####.</p>
+<p class="mb10">RCART Restorent Services provides ordering food from the table. Its started in ####.</p>
 <p><i class="fa fa-location-arrow">Bangalore</i> </p>
 <p><i class="fa fa-phone"></i>  +91-9901966958 </p>
 <p><i class="fa fa fa-envelope"></i> info@example.com  </p>
