@@ -20,8 +20,8 @@
 <h5 class="headin5_amrc col_white_amrc pt2">About Us</h5>
 <!--headin5_amrc-->
 <ul class="footer_ul_amrc">
-<li><a href="http://webenlance.com">Carrear</a></li>
-<li><a href="http://webenlance.com">Blog</a></li>
+<li><a href="">Career</a></li>
+<li><a href="">Blog</a></li>
 
 
 </ul>
