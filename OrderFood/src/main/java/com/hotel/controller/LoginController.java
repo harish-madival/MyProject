@@ -241,28 +241,29 @@ public class LoginController {
 	}
 	
 	@PostMapping("/validatefordeleteacount")
-	public RedirectView validatePasswordForDeleteAccount(HttpSession session, 
+	public ModelAndView validatePasswordForDeleteAccount(HttpSession session, 
 			@RequestParam("checkpassword") String checkpass, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		RedirectView rdv = new RedirectView();
-		System.out.println("password:" + checkpass);
+		ModelAndView rdv = new ModelAndView("profile");
+		RequestDispatcher rd;
 		if (session.getAttribute("email") != null) {
 			int uid = (Integer) session.getAttribute("userid");
 
 			User user = this.userService.getUserData(uid);
 			if (user.getUserpassword().equals(checkpass)) {
-				rdv.setUrl("deleteAccount");				
-			}else {
-				rdv.setUrl("login");				
 				/*
-				 * request.setAttribute("passwordmismatch", "You entered wrong password");
-				 * RequestDispatcher rd=request.getRequestDispatcher("profile.jsp");
-				 * rd.forward(request, response);
+				 * rd=request.getRequestDispatcher("deleteAccount"); rd.forward(request,
+				 * response);
 				 */
+				response.sendRedirect("deleteAccount");
+			}else {
+				request.setAttribute("passwordmismatched", "You entered wrong password");
+				rd=request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp");
+				rd.forward(request, response);
 			}
 		} else {
-			rdv.setUrl("login");
+			rdv.setViewName("profile");
 		}
 
 		return rdv;

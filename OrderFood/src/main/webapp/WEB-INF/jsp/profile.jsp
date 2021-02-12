@@ -104,6 +104,7 @@
 									id="deletebtn">
 									<i class="glyphicon glyphicon-repeat"></i> Delete Your Account
 								</button>
+								<span class="error"> ${passwordmismatched }</span>
 								
 								<div class="mt-2" id="editpage" style="display: none">
 									<form action="validateforprofilepassword" method="post"
