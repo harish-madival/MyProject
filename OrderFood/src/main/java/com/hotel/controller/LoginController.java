@@ -1,22 +1,31 @@
 package com.hotel.controller;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeSet;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -31,21 +40,20 @@ import antlr.TreeParserSharedInputState;
 public class LoginController {
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private OrderService orderService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView loginPage(HttpSession session) {
+	public ModelAndView loginPage(HttpSession session,HttpServletRequest request) {
 		ModelAndView mdv = new ModelAndView();
 
 		if (session.getAttribute("email") != null) {
 			int uid = (Integer) session.getAttribute("userid");
 
 			User user = this.userService.getUserData(uid);
-			List<OrderDetail> orderddetail=this.orderService.geOrderedData(uid);
-			//Collections.sort(orderddetail, Collections.reverseOrder()); 
-			
+			List<OrderDetail> orderddetail = this.orderService.geOrderedData(uid);
+			// Collections.sort(orderddetail, Collections.reverseOrder());
 			mdv.addObject("user", user);
 			mdv.addObject("orderddetail", orderddetail);
 			mdv.setViewName("profile");
@@ -59,9 +67,8 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(@RequestParam String emailid, 
-			@RequestParam String userpassword,
-			HttpSession session,Model m) {
+	public ModelAndView login(@RequestParam String emailid, @RequestParam String userpassword, HttpSession session,
+			Model m) {
 		ModelAndView mv = new ModelAndView("index");
 
 		List<User> u = userService.validateUser(emailid, userpassword);
@@ -130,64 +137,67 @@ public class LoginController {
 		modelAndView.addObject("title", "Register");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "/profileedit", method = RequestMethod.GET)
 	public ModelAndView editProfile(HttpSession session) {
 
 		ModelAndView mdv = new ModelAndView("profileedit");
-		
+
 		if (session.getAttribute("email") != null) {
 			int uid = (Integer) session.getAttribute("userid");
 
 			User user = this.userService.getUserData(uid);
 			mdv.addObject("user", user);
-			
+
 			mdv.setViewName("profileedit");
 			mdv.addObject("title", "EditProfile");
+			return mdv;
+
 		} else {
 			mdv.setViewName("login");
 			mdv.addObject("title", "Login");
 		}
-		
+
 		return mdv;
 	}
-	
+
 	@RequestMapping(value = "/updateprofile", method = RequestMethod.POST)
-	public ModelAndView updateProfile(HttpSession session,@Valid @ModelAttribute("u") User u, BindingResult result) {
+	public ModelAndView updateProfile(HttpSession session, @Valid @ModelAttribute("u") User u, BindingResult result) {
 
 		ModelAndView mdv = new ModelAndView("profile");
-		
+
 		if (session.getAttribute("email") != null) {
 			int uid = (Integer) session.getAttribute("userid");
-			
-//			if (result.hasErrors()) {
-//				mdv.setViewName("profileedit");
-//				return mdv;
-//			}
-			
+
+			if (result.hasErrors()) {
+				mdv.setViewName("profileedit");
+				return mdv;
+			}
+
 			User user = this.userService.getUserData(uid);
 			user.setFullName(u.getFullName());
 			user.setUsername(u.getUsername());
 			user.setMobile(u.getMobile());
 			user.setEmailid(u.getEmailid());
-			
-			User updatedata=this.userService.updateData(user);
+
+			User updatedata = this.userService.updateData(user);
 			mdv.addObject("user", updatedata);
 			mdv.setViewName("profile");
-			
+			session.removeAttribute("valid");
+
 		} else {
 			mdv.setViewName("login");
 			mdv.addObject("title", "Login");
 		}
-		
+
 		return mdv;
 	}
-	
+
 	@RequestMapping(value = "/deleteAccount", method = RequestMethod.GET)
 	public ModelAndView deleteAccount(HttpSession session) {
 
 		ModelAndView mdv = new ModelAndView("register");
-		
+
 		if (session.getAttribute("email") != null) {
 			int uid = (Integer) session.getAttribute("userid");
 
@@ -201,7 +211,60 @@ public class LoginController {
 			mdv.setViewName("login");
 			mdv.addObject("title", "Login");
 		}
-		
+
 		return mdv;
+	}
+
+	@PostMapping("/validateforprofilepassword")
+	public ModelAndView validatePasswordForEditProfile(HttpSession session, @RequestParam("checkpassword") String checkpass) {
+
+		ModelAndView mdv = new ModelAndView("profile");
+		System.out.println("password:" + checkpass);
+		if (session.getAttribute("email") != null) {
+			int uid = (Integer) session.getAttribute("userid");
+
+			User user = this.userService.getUserData(uid);
+			if (user.getUserpassword().equals(checkpass)) {
+				mdv.setViewName("profileedit");
+				mdv.addObject("user", user);				
+			}else {
+				mdv.setViewName("profile");
+				mdv.addObject("passwordmismatch", "You entered wrong password");
+				mdv.addObject("user", user);
+			}
+		} else {
+			mdv.setViewName("login");
+			mdv.addObject("title", "Login");
+		}
+
+		return mdv;
+	}
+	
+	@PostMapping("/validatefordeleteacount")
+	public RedirectView validatePasswordForDeleteAccount(HttpSession session, 
+			@RequestParam("checkpassword") String checkpass, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		RedirectView rdv = new RedirectView();
+		System.out.println("password:" + checkpass);
+		if (session.getAttribute("email") != null) {
+			int uid = (Integer) session.getAttribute("userid");
+
+			User user = this.userService.getUserData(uid);
+			if (user.getUserpassword().equals(checkpass)) {
+				rdv.setUrl("deleteAccount");				
+			}else {
+				rdv.setUrl("login");				
+				/*
+				 * request.setAttribute("passwordmismatch", "You entered wrong password");
+				 * RequestDispatcher rd=request.getRequestDispatcher("profile.jsp");
+				 * rd.forward(request, response);
+				 */
+			}
+		} else {
+			rdv.setUrl("login");
+		}
+
+		return rdv;
 	}
 }

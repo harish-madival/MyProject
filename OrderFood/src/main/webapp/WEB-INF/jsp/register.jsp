@@ -93,7 +93,9 @@
 						</div>
 						<input name="emailid" class="form-control"
 							placeholder="Email address" type="email">
+							
 					</div>
+					<p>* Provide active email address</p>
 
 					<!-- form-group// -->
 					<div role="alert">
@@ -110,7 +112,9 @@
 							<option selected="">+91</option>
 						</select> <input name="mobile" id="mobile" class="form-control"
 							placeholder="Phone number" type="text" ">
+							
 					</div>
+					<p>* Provide active Mobile number</p>
 					
 
 					<!-- form-group// -->
