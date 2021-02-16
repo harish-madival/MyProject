@@ -16,7 +16,6 @@ public class OrderService {
 	private OrderFoodDao orderFoodDao;
 
 	public List<OrderDetail> getOrderedData() {
-		// TODO Auto-generated method stub
 		return this.orderFoodDao.getOrderedData();
 	}
 	

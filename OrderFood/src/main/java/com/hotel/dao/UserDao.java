@@ -33,14 +33,13 @@ public class UserDao {
 	@Autowired
 	private UserRepo userrepo;	
 
-	public List<User> validateUser(String emailid, String userpassword) {
+	public User validateUser(String emailid, String userpassword) {
 		
 		return this.userrepo.findByEmailidAndUserpassword(emailid, userpassword);
 	}
 
-	public User createUser(User u) {
-		// TODO Auto-generated method stub
-		return this.userrepo.save(u);
+	public void createUser(User u) {
+		userrepo.save(u);
 	}
 
 	public User getUserData(int uid) {

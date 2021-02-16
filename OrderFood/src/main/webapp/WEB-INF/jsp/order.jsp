@@ -48,7 +48,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${list}" var="list">
+								<c:forEach items="${orderlist}" var="list">
 									<form action="cart/${list.id}">
 
 										<tr>

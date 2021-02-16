@@ -35,28 +35,7 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 
-	@RequestMapping("/selectveg")
-	public ModelAndView selectVeg(HttpSession session) {
-		ModelAndView modelAndView = new ModelAndView("order");
-
-		String veg = "Veg";
-		List<FoodItems> list = this.foodItemService.getVeg(veg);
-		modelAndView.addObject("select", "veg");
-		modelAndView.addObject("list", list);
-		modelAndView.addObject("title", "Select_veg");
-		return modelAndView;
-	}
-
-	@RequestMapping("/selectnonveg")
-	public ModelAndView SelectNonveg() {
-		ModelAndView modelAndView = new ModelAndView("order");
-		String nonveg = "Non-Veg";
-		List<FoodItems> list = this.foodItemService.getNonVeg(nonveg);
-		modelAndView.addObject("select", "nonveg");
-		modelAndView.addObject("list", list);
-		modelAndView.addObject("title", "Select_nonveg");
-		return modelAndView;
-	}
+	
 
 	@RequestMapping("/cart")
 	public String cartedItems(Model m, HttpServletRequest req, HttpSession session) {
@@ -89,10 +68,10 @@ public class OrderController {
 			Random rand = new Random();
 			int cid = rand.nextInt(1000);			
 			cart.setId(cid);
-			cart.setItemname(food.getItemname());
+			cart.setItemname(food.getItemName());
 			cart.setPrice(food.getPrice());
 			cart.setUserid(uid);
-			totalprice=(Integer.parseInt(cart.getPrice())) * cart.getQuantity();
+			totalprice=cart.getPrice() * cart.getQuantity();
 			cart.setTotalprice(totalprice);
 			subtotal=subtotal+totalprice;
 			m.addAttribute("subtotal", subtotal);

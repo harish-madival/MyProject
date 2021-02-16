@@ -13,7 +13,7 @@ public class Cart {
 	private int userid;
 	private String itemname;
 	private int quantity;
-	private String price;
+	private int price;
 	private long totalprice;
 	
 	@ManyToOne
@@ -43,7 +43,6 @@ public class Cart {
 	
 	public Cart() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	
@@ -65,11 +64,11 @@ public class Cart {
 	public void setItemname(String itemname) {
 		this.itemname = itemname;
 	}
-	public String getPrice() {
+	public int getPrice() {
 		return price;
 	}
-	public void setPrice(String price) {
-		this.price = price;
+	public void setPrice(int i) {
+		this.price = i;
 	}
 	@Override
 	public String toString() {

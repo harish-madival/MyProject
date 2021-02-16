@@ -18,15 +18,13 @@ public class UserService {
 	@Autowired
 	private UserDao userDao;
 	
-	public List<User> validateUser(String emailid, String userpassword) {
+	public User validateUser(String emailid, String userpassword) {
 		// TODO Auto-generated method stub
 		return this.userDao.validateUser(emailid,userpassword);
 	}
 
-	public User createUser(User u) {
-		// TODO Auto-generated method stub
-		
-		return this.userDao.createUser(u);
+	public void createUser(User u) {
+		userDao.createUser(u);
 	}
 
 	public User getUserData(int uid) {
