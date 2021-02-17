@@ -1,9 +1,0 @@
-com/hoteladmin/repository/OrderFoodRepo.class
-com/hoteladmin/dao/FoodItemsDao.class
-com/hoteladmin/dao/OrderFoodDao.class
-com/hoteladmin/service/OrderService.class
-com/hoteladmin/model/OrderDetail.class
-com/hoteladmin/controller/AdminController.class
-com/hoteladmin/service/UserService.class
-com/hoteladmin/model/FoodItems.class
-com/hoteladmin/repository/FoodItemsRepo.class
