@@ -18,8 +18,8 @@
 			<div class="col-sm-10">
 				<h1>User name</h1>
 			</div>
-			
-			
+
+
 			<div class="col-sm-2">
 				<a href="/users" class="pull-right"><img title="profile image"
 					class="img-circle img-responsive"
@@ -56,7 +56,7 @@
 				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item active"><a class="nav-link active"
 						href="#home" role="tab" data-toggle="tab">Profile</a></li>
-					
+
 
 				</ul>
 
@@ -64,24 +64,34 @@
 				<div class="tab-content">
 					<div class="tab-pane active" id="home">
 						<hr>
-						<form class="form" action="updateprofile" method="post" id="updateform">
+						<form class="form" action="updateprofile" method="post"
+							id="updateform">
 							<div class="form-group">
-
+								<div role="alert">
+									<form:errors path="user.fullName" class="error" />
+								</div>
 								<div class="col-xs-6">
 									<label for="fullName"><h4>Full Name</h4></label> <input
-										type="text" class="form-control" name="fullName"
-										id="fullName" placeholder="Full Name"
-										title="enter your first name if any." value="${user.fullName}">
+										type="text" class="form-control" name="fullName" id="fullName"
+										placeholder="Full Name" title="enter your first name if any."
+										value="${user.fullName}">
 								</div>
+							</div>
+							<div role="alert">
+								<form:errors path="user.userName" class="error" />
 							</div>
 							<div class="form-group">
 
 								<div class="col-xs-6">
-									<label for="username"><h4>Username</h4></label> <input
-										type="text" class="form-control" name="username"
-										id="username" placeholder="Full Name"
-										title="enter your first name if any." value="${user.username}">
+									<label for="userName"><h4>Username</h4></label> <input
+										type="text" class="form-control" name="userName" id="userName"
+										placeholder="User Name" title="enter your first name if any."
+										value="${user.userName}">
 								</div>
+							</div>
+
+							<div role="alert">
+								<form:errors path="user.mobile" class="error" />
 							</div>
 							<div class="form-group">
 
@@ -93,16 +103,19 @@
 								</div>
 							</div>
 
-							
+							<div role="alert">
+								<form:errors path="user.emailId" class="error" />
+							</div>
 							<div class="form-group">
 								<div class="col-xs-6">
-									<label for="emailid"><h4>Email</h4></label> <input type="email"
-										class="form-control" name="emailid" id="emailid"
-										placeholder="you@email.com" title="enter your email." value="${user.emailid}">
+									<label for="emailId"><h4>Email</h4></label> <input type="email"
+										class="form-control" name="emailId" id="emailId"
+										placeholder="you@email.com" title="enter your email."
+										value="${user.emailId}">
 								</div>
 							</div>
-							
-							
+
+
 							<div class="form-group">
 								<div class="col-xs-12">
 									<br>

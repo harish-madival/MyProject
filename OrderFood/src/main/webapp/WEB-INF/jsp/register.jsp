@@ -82,7 +82,7 @@
 					</div>
 
 					<div role="alert">
-						<form:errors path="u.emailid" class="error" />
+						<form:errors path="u.emailId" class="error" />
 						<div class="error">${emerror}</div>
 					</div>
 					<!-- form-group// -->
@@ -91,7 +91,7 @@
 							<span class="input-group-text"> <i class="fa fa-envelope"></i>
 							</span>
 						</div>
-						<input name="emailid" class="form-control"
+						<input name="emailId" class="form-control"
 							placeholder="Email address" type="email">
 							
 					</div>
@@ -119,7 +119,7 @@
 
 					<!-- form-group// -->
 					<div role="alert">
-						<form:errors path="u.username" class="error" />
+						<form:errors path="u.userName" class="error" />
 						<div class="error">${unerror}</div>
 					</div>
 					<div class="form-group input-group">
@@ -127,20 +127,20 @@
 							<span class="input-group-text"> <i class="fa fa-lock"></i>
 							</span>
 						</div>
-						<input name="username" class="form-control"
+						<input name="userName" class="form-control"
 							placeholder="Create Username" type="text">
 					</div>
 
 					<!-- form-group end.// -->
 					<div role="alert">
-						<form:errors path="u.userpassword" class="error" />
+						<form:errors path="u.userPassword" class="error" />
 					</div>
 					<div class="form-group input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"> <i class="fa fa-lock"></i>
 							</span>
 						</div>
-						<input name="userpassword" id="userpassword" class="form-control"
+						<input name="userPassword" id="userPassword" class="form-control"
 							placeholder="Create password" type="password"
 							pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
 							title="Must contain at least one number and one uppercase 
@@ -163,7 +163,7 @@
 					</div>
 					<!-- form-group// -->
 					<div role="alert">
-						<form:errors path="u.confirmpassword" class="error" />
+						<form:errors path="u.confirmPassword" class="error" />
 						<div class="error">${passworderror }</div>
 					</div>
 					<div class="form-group input-group">
@@ -171,7 +171,7 @@
 							<span class="input-group-text"> <i class="fa fa-lock"></i>
 							</span>
 						</div>
-						<input name="confirmpassword" class="form-control"
+						<input name="confirmPassword" class="form-control"
 							placeholder="Repeat password" type="password">
 
 					</div>
@@ -193,7 +193,7 @@
 	</div>
 	<!--container end.//-->
 	<script>
-		var myInput = document.getElementById("userpassword");
+		var myInput = document.getElementById("userPassword");
 		var letter = document.getElementById("letter");
 		var capital = document.getElementById("capital");
 		var number = document.getElementById("number");

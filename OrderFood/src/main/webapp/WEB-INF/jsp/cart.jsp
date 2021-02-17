@@ -36,7 +36,7 @@
 										</a>
 										<div class="media-body">
 											<h4 class="media-heading">
-												<a href="#">${cd.itemname}</a>
+												<a href="#">${cd.itemName}</a>
 											</h4>
 											
 											<span>Status: </span><span class="text-success"><strong>Pending</strong></span>
@@ -45,7 +45,7 @@
 								</td>
 								<td class="col-sm-1 col-md-1" style="text-align: center">${cd.quantity}</td>
 								<td class="col-sm-1 col-md-1 text-center"><strong>$${cd.price}</strong></td>
-								<td class="col-sm-1 col-md-1 text-center"><strong>$${cd.totalprice}</strong></td>
+								<td class="col-sm-1 col-md-1 text-center"><strong>$${cd.totalPrice}</strong></td>
 								<td class="col-sm-1 col-md-1">
 									<a href="${pageContext.request.contextPath }/delete/${cd.id}"><button type="button" class="btn btn-danger">
 										<span class="glyphicon glyphicon-remove"></span> Remove

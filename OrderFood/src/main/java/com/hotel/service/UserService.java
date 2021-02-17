@@ -18,9 +18,8 @@ public class UserService {
 	@Autowired
 	private UserDao userDao;
 	
-	public User validateUser(String emailid, String userpassword) {
-		// TODO Auto-generated method stub
-		return this.userDao.validateUser(emailid,userpassword);
+	public User validateUser(String emailId, String userPassword) {
+		return this.userDao.validateUser(emailId,userPassword);
 	}
 
 	public void createUser(User u) {
@@ -28,12 +27,10 @@ public class UserService {
 	}
 
 	public User getUserData(int uid) {
-		// TODO Auto-generated method stub
 		return this.userDao.getUserData(uid);
 	}
 
 	public List<User> getAllUserData() {
-		// TODO Auto-generated method stub
 		return this.userDao.getAllUserData();
 	}
 

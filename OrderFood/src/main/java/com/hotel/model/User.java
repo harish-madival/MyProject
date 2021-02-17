@@ -31,21 +31,21 @@ public class User {
 	
 	@Column(unique = true)
 	@NotEmpty(message = "Field should not be Empty") @Email
-	private String emailid;
+	private String emailId;
 	
 	@Column(unique = true)
 	@Size(min = 10,max = 10,message = "Provide proper mobile number")
 	private String mobile;
 	
 	@Size(min=6,message="Usrname must be at least 6 character")	
-	private String username;
+	private String userName;
 	
 	
 	@NotEmpty(message = "Field should not be Empty")	
-	private String userpassword;
+	private String userPassword;
 	
 	@NotEmpty(message = "Field should not be Empty")
-	private String confirmpassword;
+	private String confirmPassword;
 	
 	
 	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
@@ -55,7 +55,6 @@ public class User {
 		super();
 	}
 
-	
 	public int getUserId() {
 		return userId;
 	}
@@ -72,44 +71,51 @@ public class User {
 		this.fullName = fullName;
 	}
 
-	public String getEmailid() {
-		return emailid;
+	public String getEmailId() {
+		return emailId;
 	}
 
-	public void setEmailid(String emailid) {
-		this.emailid = emailid;
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
+
 
 	public String getMobile() {
 		return mobile;
 	}
 
+
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 
-	public String getUsername() {
-		return username;
+
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public String getUserpassword() {
-		return userpassword;
+
+	public String getUserPassword() {
+		return userPassword;
 	}
 
-	public void setUserpassword(String userpassword) {
-		this.userpassword = userpassword;
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
 
-	public String getConfirmpassword() {
-		return confirmpassword;
+
+	public String getConfirmPassword() {
+		return confirmPassword;
 	}
 
-	public void setConfirmpassword(String confirmpassword) {
-		this.confirmpassword = confirmpassword;
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 	public List<Cart> getCart() {
@@ -120,4 +126,14 @@ public class User {
 		this.cart = cart;
 	}
 
+
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", fullName=" + fullName + ", emailid=" + emailId + ", mobile=" + mobile
+				+ ", username=" + userName + ", userpassword=" + userPassword + ", confirmpassword=" + confirmPassword
+				+ ", cart=" + cart + "]";
+	}
+
+	
 }

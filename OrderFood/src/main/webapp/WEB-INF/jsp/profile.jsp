@@ -84,7 +84,7 @@
 								<label for="emailid"><h4>Email</h4></label> <input type="email"
 									disabled class="form-control" name="emailid" id="emailid"
 									placeholder="you@email.com" title="enter your email."
-									value="${user.emailid}">
+									value="${user.emailId}">
 							</div>
 						</div>
 
@@ -158,9 +158,9 @@
 										<tbody>
 											<c:forEach items="${orderddetail}" var="ordereddata">
 												<tr>
-													<td rowspan="">${ordereddata.orderid}</td>
+													<td rowspan="">${ordereddata.orderId}</td>
 													<td>${user.fullName}</td>
-													<td>${ordereddata.ordereddate}</td>
+													<td>${ordereddata.orderedDate}</td>
 													<td>${ordereddata.cartItemName }</td>
 													<td>${ordereddata.cartPrice }</td>
 													<td><span class="label label-success">Pending</span></td>

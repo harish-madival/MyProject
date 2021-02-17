@@ -8,7 +8,7 @@ import com.hotel.model.User;
 
 public interface UserRepo extends JpaRepository<User, Integer>{
 
-	User findByEmailidAndUserpassword(String emailid, String userpassword);
+	User findByEmailIdAndUserPassword(String emailId, String userPassword);
 
 	User findByUserId(int uid);	
 

@@ -14,9 +14,10 @@
 				href="<%=request.getContextPath() + "/"%>">Home <span
 					class="sr-only">(current)</span>
 			</a></li>
-			<li class="nav-item"><a class="nav-link text-white" href="${pageContext.request.contextPath}/addfood">AddFood</a>
+			<li class="nav-item"><a class="nav-link text-white" 
+			href="addFood">AddFood</a>
 			</li>
-			<li class="nav-item"><a class="nav-link text-white" href="${pageContext.request.contextPath}/ordered">Notification</a>
+			<li class="nav-item"><a class="nav-link text-white" href="orderdetail">Notification</a>
 			</li>
 			
 		</ul>

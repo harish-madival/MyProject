@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.hibernate.boot.jaxb.hbm.spi.JaxbHbmOneToManyCollectionElementType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,39 +31,55 @@ import com.hotel.service.UserService;
 @Controller
 public class LoginController {
 	
-	private static final String SESSION_USER_EMAIL_ID = "email";
-
-	private static final String SESSION_USER_ID = "userid";
+	
 
 	private static final String LOGIN_STATUS = "loginfailed";
 
-	private static final Object LOGIN_STATUS_MESSAGE = "Username or password mismatch";
+	private static final String LOGIN_STATUS_MESSAGE = "Username or password mismatch";
 
-	private static final Object LOGIN_TITLE = "Login";
+	private static final String LOGIN_TITLE = "Login";
 
 	private static final String USERINFO = "user";
 
 	private static final String ORDERDETAIL = "orderddetail";
 
-	private static final Object PROFILE_TITLE = "Profile";
+	private static final String PROFILE_TITLE = "Profile";
 
-	private static final Object REGISTRATION_TITLE = "Register";
+	private static final String REGISTRATION_TITLE = "Register";
 
 	private static final String REGISTRATION_STATUS = "registrationStatus";
 
-	private static final Object REGISTRATION_STATUS_MESSAGE = "Registered Successfully";
+	private static final String REGISTRATION_STATUS_MESSAGE = "Registered Successfully";
 
 	private static final String VALIDATION_USERNAME_ERROR = "unerror";
 
-	private static final Object VALIDATION_USERNAME_ERROR_MESSAGE = "User Name already used";
+	private static final String VALIDATION_USERNAME_ERROR_MESSAGE = "User Name already used";
 
 	private static final String VALIDATION_MOBILE_ERROR = "mberror";
 
-	private static final Object VALIDATION_MOBILE_ERROR_MESSAGE = "Mobile Number already used";
+	private static final String VALIDATION_MOBILE_ERROR_MESSAGE = "Mobile Number already used";
 
 	private static final String VALIDATION_EMAIL_ID_ERROR = "emerror";
 
-	private static final Object VALIDATION_EMAIL_ERROR_MESSAGE = "Email Id already used";
+	private static final String VALIDATION_EMAIL_ERROR_MESSAGE = "Email Id already used";
+
+	private static final String TITLE_EDIT = "EditProfile";
+
+	private static final String DELETE_STATUS = "deletestatus";
+
+	private static final String DELETE_STATUS_MESSAGE = "Account deleted successfully";
+
+	private static final String PASSWORD = "checkpassword";
+
+	private static final String MATCH_PASSWORD = "passwordmismatch";
+
+	private static final Object MATCH_PASSWORD_STATUS = "You entered wrong password";
+
+	private static final String PROFILE_PAGE = "/WEB-INF/jsp/profile.jsp";
+
+	private static final String EMAILID = "emailId";
+
+	private static final String USER_PASSWORD = "userPassword";
 
 	@Autowired
 	private UserService userService;
@@ -74,8 +91,8 @@ public class LoginController {
 	public ModelAndView loginPage(HttpSession session,HttpServletRequest request) {
 		ModelAndView mdv = new ModelAndView();
 
-		if (session.getAttribute(SESSION_USER_EMAIL_ID) != null) {
-			int uid = (Integer) session.getAttribute(SESSION_USER_ID);
+		if (session.getAttribute(UrlMappingConstants.SESSION_USER_EMAIL_ID) != null) {
+			int uid = (Integer) session.getAttribute(UrlMappingConstants.SESSION_USER_ID);
 
 			User user = this.userService.getUserData(uid);
 			List<OrderDetail> orderddetail = this.orderService.geOrderedData(uid);
@@ -92,16 +109,16 @@ public class LoginController {
 	}
 
 	@PostMapping(value = UrlMappingConstants.HOTEL_MERCHANT_USER_LOGIN)
-	public ModelAndView login(@RequestParam String emailid, @RequestParam String userpassword, HttpSession session,
+	public ModelAndView login(@RequestParam(EMAILID) String emailId, @RequestParam(USER_PASSWORD) String userPassword, HttpSession session,
 			Model m) {
 		ModelAndView mv = new ModelAndView(UrlMappingConstants.HOTEL_MERCHANT_USER_HOME);
 
-		User u = userService.validateUser(emailid, userpassword);
+		User u = userService.validateUser(emailId, userPassword);
 		int uid = u.getUserId();
 		
-		if (u.getEmailid().equals(emailid)){
-			session.setAttribute(SESSION_USER_EMAIL_ID, emailid);
-			session.setAttribute(SESSION_USER_ID, uid);
+		if (u.getEmailId().equals(emailId)){
+			session.setAttribute(UrlMappingConstants.SESSION_USER_EMAIL_ID, emailId);
+			session.setAttribute(UrlMappingConstants.SESSION_USER_ID, uid);
 			mv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_HOME);
 		} else {
 			m.addAttribute(LOGIN_STATUS, LOGIN_STATUS_MESSAGE);
@@ -120,7 +137,7 @@ public class LoginController {
 	}
 
 	@PostMapping(value = UrlMappingConstants.HOTEL_MERCHANT_USER_REGISTRATION)
-	public ModelAndView userRegistration(@Valid @ModelAttribute("u") User u, BindingResult result) {
+	public ModelAndView userRegistration(@Valid @ModelAttribute(USERINFO) User user, BindingResult result) {
 		ModelAndView modelAndView = new ModelAndView(UrlMappingConstants.HOTEL_MERCHANT_USER_REGISTRATION);
 		if (result.hasErrors()) {
 			modelAndView.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_REGISTRATION);
@@ -128,8 +145,8 @@ public class LoginController {
 		}
 
 		try {
-			if (u.getUserpassword().equals(u.getConfirmpassword())) {
-				userService.createUser(u);				
+			if (user.getUserPassword().equals(user.getConfirmPassword())) {
+				userService.createUser(user);				
 				modelAndView.addObject(REGISTRATION_STATUS,REGISTRATION_STATUS_MESSAGE);
 			} else {
 				modelAndView.addObject("passworderror", "password mismatch");
@@ -137,19 +154,19 @@ public class LoginController {
 
 		} catch (Exception e) {
 			List<User> udata = this.userService.getAllUserData();
-			for (User user : udata) {
+			for (User userdata : udata) {
 
-				if (user.getUsername().equals(u.getUsername())) {
+				if (userdata.getUserName().equals(user.getUserName())) {
 					modelAndView.addObject(VALIDATION_USERNAME_ERROR, VALIDATION_USERNAME_ERROR_MESSAGE);
 				}
 			}
-			for (User user : udata) {
-				if (user.getMobile().equals(u.getMobile())) {
+			for (User userdata : udata) {
+				if (userdata.getMobile().equals(user.getMobile())) {
 					modelAndView.addObject(VALIDATION_MOBILE_ERROR, VALIDATION_MOBILE_ERROR_MESSAGE);
 				}
 			}
-			for (User user : udata) {
-				if (user.getEmailid().equals(u.getEmailid())) {
+			for (User userdata : udata) {
+				if (userdata.getEmailId().equals(user.getEmailId())) {
 					modelAndView.addObject(VALIDATION_EMAIL_ID_ERROR, VALIDATION_EMAIL_ERROR_MESSAGE);
 				}
 			}
@@ -159,143 +176,132 @@ public class LoginController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/profileedit", method = RequestMethod.GET)
+	@GetMapping(value = UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE_EDIT)
 	public ModelAndView editProfile(HttpSession session) {
 
-		ModelAndView mdv = new ModelAndView("profileedit");
+		ModelAndView mdv = new ModelAndView(UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE_EDIT);
 
-		if (session.getAttribute("email") != null) {
-			int uid = (Integer) session.getAttribute("userid");
+		if (session.getAttribute(UrlMappingConstants.SESSION_USER_EMAIL_ID) != null) {
+			int uid = (Integer) session.getAttribute(UrlMappingConstants.SESSION_USER_ID);
 
 			User user = this.userService.getUserData(uid);
-			mdv.addObject("user", user);
+			mdv.addObject(USERINFO, user);
 
-			mdv.setViewName("profileedit");
-			mdv.addObject("title", "EditProfile");
+			mdv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE_EDIT);
+			mdv.addObject(JspConstants.TITLE, TITLE_EDIT);
 			return mdv;
 
 		} else {
-			mdv.setViewName("login");
-			mdv.addObject("title", "Login");
+			mdv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_LOGIN);
+			mdv.addObject(JspConstants.TITLE, LOGIN_TITLE);
 		}
 
 		return mdv;
 	}
 
-	@RequestMapping(value = "/updateprofile", method = RequestMethod.POST)
-	public ModelAndView updateProfile(HttpSession session, @Valid @ModelAttribute("u") User u, BindingResult result) {
+	@PostMapping(value =UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE_UPDATE )
+	public ModelAndView updateProfile(HttpSession session, @Valid @ModelAttribute(USERINFO) User user, BindingResult result) {
+		ModelAndView mdv = new ModelAndView(UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE);
 
-		ModelAndView mdv = new ModelAndView("profile");
+		if (session.getAttribute(UrlMappingConstants.SESSION_USER_EMAIL_ID) != null) {
+			int uid = (Integer) session.getAttribute(UrlMappingConstants.SESSION_USER_ID);
+			User userdata = this.userService.getUserData(uid);
+			userdata.setFullName(user.getFullName());
+			userdata.setUserName(user.getUserName());
+			userdata.setMobile(user.getMobile());
+			userdata.setEmailId(user.getEmailId());
 
-		if (session.getAttribute("email") != null) {
-			int uid = (Integer) session.getAttribute("userid");
-
-			if (result.hasErrors()) {
-				mdv.setViewName("profileedit");
-				return mdv;
-			}
-
-			User user = this.userService.getUserData(uid);
-			user.setFullName(u.getFullName());
-			user.setUsername(u.getUsername());
-			user.setMobile(u.getMobile());
-			user.setEmailid(u.getEmailid());
-
-			User updatedata = this.userService.updateData(user);
-			mdv.addObject("user", updatedata);
-			mdv.setViewName("profile");
-			session.removeAttribute("valid");
-
+			User updatedata = this.userService.updateData(userdata);
+			mdv.addObject(USERINFO, updatedata);
+			mdv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE);
+			
 		} else {
-			mdv.setViewName("login");
-			mdv.addObject("title", "Login");
+			mdv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_LOGIN);
+			mdv.addObject(JspConstants.TITLE, LOGIN_TITLE);
 		}
 
 		return mdv;
 	}
 
-	@RequestMapping(value = "/deleteAccount", method = RequestMethod.GET)
+	@GetMapping(value = UrlMappingConstants.HOTEL_MERCHANT_USER_DELETE_ACCOUNT)
 	public ModelAndView deleteAccount(HttpSession session) {
 
-		ModelAndView mdv = new ModelAndView("register");
+		ModelAndView mdv = new ModelAndView(UrlMappingConstants.HOTEL_MERCHANT_USER_REGISTRATION);
 
-		if (session.getAttribute("email") != null) {
-			int uid = (Integer) session.getAttribute("userid");
+		if (session.getAttribute(UrlMappingConstants.SESSION_USER_EMAIL_ID) != null) {
+			int uid = (Integer) session.getAttribute(UrlMappingConstants.SESSION_USER_ID);
 
 			this.userService.deleteUser(uid);
-			session.removeAttribute("userid");
+			session.removeAttribute(UrlMappingConstants.SESSION_USER_EMAIL_ID);
+			session.removeAttribute(UrlMappingConstants.SESSION_USER_ID);
 			session.invalidate();
-			mdv.addObject("deletestatus", "Account deleted successfully");
-			mdv.setViewName("register");
-			mdv.addObject("title", "register");
+			mdv.addObject(DELETE_STATUS, DELETE_STATUS_MESSAGE);
+			mdv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_REGISTRATION);
+			mdv.addObject(JspConstants.TITLE, REGISTRATION_TITLE);
 		} else {
-			mdv.setViewName("login");
-			mdv.addObject("title", "Login");
+			mdv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_LOGIN);
+			mdv.addObject(JspConstants.TITLE, LOGIN_TITLE);
 		}
 
 		return mdv;
 	}
 
-	@PostMapping("/validateforprofilepassword")
-	public ModelAndView validatePasswordForEditProfile(HttpSession session, @RequestParam("checkpassword") String checkpass) {
+	@PostMapping(value=UrlMappingConstants.HOTEL_MERCHANT_USER_VALIDATE_PASSWORD_FOR_EDIT)
+	public ModelAndView validatePasswordForEditProfile(HttpSession session, @RequestParam(PASSWORD) String checkpass) {
 
-		ModelAndView mdv = new ModelAndView("profile");
-		System.out.println("password:" + checkpass);
-		if (session.getAttribute("email") != null) {
-			int uid = (Integer) session.getAttribute("userid");
+		ModelAndView mdv = new ModelAndView(UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE);
+		if (session.getAttribute(UrlMappingConstants.SESSION_USER_EMAIL_ID) != null) {
+			int uid = (Integer) session.getAttribute(UrlMappingConstants.SESSION_USER_ID);
 
 			User user = this.userService.getUserData(uid);
-			if (user.getUserpassword().equals(checkpass)) {
-				mdv.setViewName("profileedit");
-				mdv.addObject("user", user);				
+			if (user.getUserPassword().equals(checkpass)) {
+				mdv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE_EDIT);
+				mdv.addObject(USERINFO, user);				
 			}else {
-				mdv.setViewName("profile");
-				mdv.addObject("passwordmismatch", "You entered wrong password");
-				mdv.addObject("user", user);
+				mdv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE);
+				mdv.addObject(MATCH_PASSWORD, MATCH_PASSWORD_STATUS);
+				mdv.addObject(USERINFO, user);
 			}
 		} else {
-			mdv.setViewName("login");
-			mdv.addObject("title", "Login");
+			mdv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_LOGIN);
+			mdv.addObject(JspConstants.TITLE, LOGIN_TITLE);
 		}
 
 		return mdv;
 	}
 	
-	@PostMapping("/validatefordeleteacount")
+	@PostMapping(value=UrlMappingConstants.HOTEL_MERCHANT_USER_VALIDATE_PASSWORD_FOR_DELETE)
 	public ModelAndView validatePasswordForDeleteAccount(HttpSession session, 
-			@RequestParam("checkpassword") String checkpass, HttpServletRequest request,
+			@RequestParam(PASSWORD) String checkpass, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		ModelAndView rdv = new ModelAndView("profile");
+		ModelAndView rdv = new ModelAndView(UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE);
 		RequestDispatcher rd;
-		if (session.getAttribute("email") != null) {
-			int uid = (Integer) session.getAttribute("userid");
+		if (session.getAttribute(UrlMappingConstants.SESSION_USER_EMAIL_ID) != null) {
+			int uid = (Integer) session.getAttribute(UrlMappingConstants.SESSION_USER_ID);
 
 			User user = this.userService.getUserData(uid);
-			if (user.getUserpassword().equals(checkpass)) {
-				/*
-				 * rd=request.getRequestDispatcher("deleteAccount"); rd.forward(request,
-				 * response);
-				 */
-				response.sendRedirect("deleteAccount");
+			if (user.getUserPassword().equals(checkpass)) {
+				
+				response.sendRedirect(UrlMappingConstants.HOTEL_MERCHANT_USER_DELETE_ACCOUNT);
 			}else {
-				request.setAttribute("passwordmismatched", "You entered wrong password");
-				rd=request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp");
+				request.setAttribute(MATCH_PASSWORD,MATCH_PASSWORD_STATUS);
+				rd=request.getRequestDispatcher(PROFILE_PAGE);
 				rd.forward(request, response);
 			}
 		} else {
-			rdv.setViewName("profile");
+			rdv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE);
 		}
 
 		return rdv;
 	}
 	
-	@RequestMapping("/logout")
+	@GetMapping(value = UrlMappingConstants.HOTEL_MERCHANT_USER_LOGOUT)
 	public String logOut(HttpSession session) {
 		
-		session.removeAttribute("email");
-		session.removeAttribute("userid");
+		session.removeAttribute(UrlMappingConstants.SESSION_USER_EMAIL_ID);
+		session.removeAttribute(UrlMappingConstants.SESSION_USER_ID);
 		session.invalidate();
-		return "login";
+		return UrlMappingConstants.HOTEL_MERCHANT_USER_LOGIN;
 	}
 }

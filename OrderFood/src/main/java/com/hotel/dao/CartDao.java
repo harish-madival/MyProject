@@ -15,18 +15,15 @@ public class CartDao {
 	
 
 	public void addtocart(Cart cart) {
-		// TODO Auto-generated method stub
 		this.cartRepo.save(cart);
 	}
 
 	public void deleteCartedData(int id) {
-		// TODO Auto-generated method stub
 		this.cartRepo.deleteById(id);
 	}
 
 	public List<Cart> getCartDataById(int uid) {
-		// TODO Auto-generated method stub
-		return this.cartRepo.findByUserid(uid);
+		return this.cartRepo.findByUserId(uid);
 	}
 
 }

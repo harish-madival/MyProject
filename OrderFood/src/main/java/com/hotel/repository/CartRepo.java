@@ -8,6 +8,6 @@ import com.hotel.model.Cart;
 
 public interface CartRepo extends JpaRepository<Cart, Integer>{
 
-	List<Cart> findByUserid(int uid);
+	List<Cart> findByUserId(int uid);
 	
 }

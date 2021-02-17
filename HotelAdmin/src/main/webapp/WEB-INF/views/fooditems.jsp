@@ -11,9 +11,9 @@
 	<div clas="container">
 		<div class="row mt-2">
 			<div class="col-md-8 offset-md-2">
-				<form action="addfood" method="post">
+				<form action="addFood" method="post">
 				<div class="form-group">
-					Food Name:<input type="text" name="itemname" class="form-control"/>
+					Food Name:<input type="text" name="itemName" class="form-control"/>
 				</div>
 				<div class="form-group">
 					Price:<input type="text" name="price" class="form-control"/>

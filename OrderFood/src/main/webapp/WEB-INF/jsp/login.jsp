@@ -12,48 +12,6 @@
 	<header>
 		<%@include file="nav.jsp"%>
 	</header>
-	<%-- <div class="container mt-5">
-		<div class="row">
-			<div class="col-md-8 offset-md-2">
-				<div class="card ">
-					<div class="card-body ">
-						<h1 class="card-title">
-							Login
-							<hr class="hr1" />
-						</h1>
-
-						<form action="login" method="post">
-							<form>
-								<div class="form-group">
-									<label for="emailid">Email address</label> <input type="email"
-										class="form-control" id="emailid" name="emailid"
-										aria-describedby="emailHelp" placeholder="Enter email">
-									<small id="emailHelp" class="form-text text-muted">We'll
-										never share your email with anyone else.</small>
-								</div>
-								<div class="form-group">
-									<label for="userpassword">Password</label> <input
-										type="password" class="form-control" id="userpassword"
-										name="userpassword" placeholder="Password">
-								</div>
-
-								<button type="submit" class="btn btn-primary">Submit</button>
-								<div>${loginfailed}</div>
-								<button class="btn btn-outline-primary">
-									<a href="register">New User??</a>
-								</button>
-								
-								<button class="btn btn-outline-primary">
-									<a>Forgot Password</a>
-								</button>
-							</form>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> --%>
-
 
 	<div class="container">
 
@@ -92,20 +50,21 @@
 					<form class="omb_loginForm" action="login" method="post">
 						<div class="input-group">
 							<span class="input-group-addon mr-2"><i class="fa fa-user"></i></span>
-							<input type="text" class="form-control" name="emailid"
+							<input type="text" class="form-control" name="emailId"
 								placeholder="email address">
 						</div>
 						<span class="help-block"></span>
 
 						<div class="input-group mt-2">
 							<span class="input-group-addon mr-2"><i class="fa fa-lock"></i></span>
-							<input type="password" class="form-control" name="userpassword"
+							<input type="password" class="form-control" name="userPassword"
 								placeholder="Password">
 						</div>
-						
+
 						<span class="help-block">${loginfailed}</span>
 
-						<button class="btn btn-lg btn-primary btn-block mt-2" type="submit">Login</button>
+						<button class="btn btn-lg btn-primary btn-block mt-2"
+							type="submit">Login</button>
 					</form>
 				</div>
 			</div>
@@ -115,7 +74,7 @@
 						<a href="register">SignUp</a>
 					</p>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3">
 					<p class="omb_forgotPwd">
 						<a href="#">Forgot password?</a>

@@ -54,7 +54,7 @@ public class HomeController {
 	@RequestMapping(value = UrlMappingConstants.HOTEL_MERCHANT_NONVEG)
 	public ModelAndView selectNonveg() {
 		ModelAndView modelAndView = new ModelAndView(UrlMappingConstants.HOTEL_MERCHANT_ORDER);
-		String nonveg =NONVEG;
+		String nonveg = NONVEG;
 		List<FoodItems> list = this.foodItemService.getNonVeg(nonveg);
 		modelAndView.addObject(ORDERLIST, list);
 		modelAndView.addObject(JspConstants.TITLE, TITLE_NONVEG);

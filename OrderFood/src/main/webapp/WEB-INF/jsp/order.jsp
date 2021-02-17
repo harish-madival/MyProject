@@ -53,7 +53,7 @@
 
 										<tr>
 											<th scope="row"><img alt="img1" src=""></th>
-											<td>${list.itemname}</td>
+											<td>${list.itemName}</td>
 											<td>${list.price}</td>
 											<td><select name="quantity" id="quantity">
 													<option value=1>1</option>

@@ -33,9 +33,9 @@ public class UserDao {
 	@Autowired
 	private UserRepo userrepo;	
 
-	public User validateUser(String emailid, String userpassword) {
+	public User validateUser(String emailId, String userPassword) {
 		
-		return this.userrepo.findByEmailidAndUserpassword(emailid, userpassword);
+		return this.userrepo.findByEmailIdAndUserPassword(emailId, userPassword);
 	}
 
 	public void createUser(User u) {
@@ -43,12 +43,10 @@ public class UserDao {
 	}
 
 	public User getUserData(int uid) {
-		// TODO Auto-generated method stub
 		return this.userrepo.findByUserId(uid);
 	}
 
 	public List<User> getAllUserData() {
-		// TODO Auto-generated method stub
 		return this.userrepo.findAll();
 	}
 

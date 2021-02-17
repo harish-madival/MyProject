@@ -26,15 +26,15 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${ordereddata}" var="ordereddata">
+						<c:forEach items="${ordereddata}" var="orderedData">
 							<tr>
-								<td rowspan="">${ordereddata.orderid}</td>
+								<td rowspan="">${orderedData.orderId}</td>
 								
-								<td>${ordereddata.ordereddate}</td>
-								<td>${ordereddata.cartItemName }</td>
-								<td>${ordereddata.cartPrice }</td>
+								<td>${orderedData.orderedDate}</td>
+								<td>${orderedData.cartItemName }</td>
+								<td>${orderedData.cartPrice }</td>
 								<td><span class="label label-success">Pending</span></td>
-								<td> ${ordereddata.userid}</td>
+								<td> ${ordereddata.userId}</td>
 								
 							</tr>
 						</c:forEach>

@@ -9,10 +9,10 @@ import com.hotel.model.OrderDetail;
 
 public interface OrderFoodRepo extends JpaRepository<OrderDetail, Integer> {
 
-	List<OrderDetail> findByorderid(long oid);
+	List<OrderDetail> findByorderId(long oid);
 
-	List<OrderDetail> findByordereddate(Date oddDate);
+	List<OrderDetail> findByorderedDate(Date oddDate);
 
-	List<OrderDetail> findByUserid(int uid);
+	List<OrderDetail> findByUserId(int uid);
 
 }
