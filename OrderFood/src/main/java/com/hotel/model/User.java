@@ -25,44 +25,35 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userId;
-	@Size(min=6,message="required")
+	
+	@NotEmpty(message = "Field should not be Empty")
+	private String fullName;
+	
 	@Column(unique = true)
-	private String username;
-	@NotEmpty(message = "Field should not be Empty")
-	@Column(unique = false)
-	private String userpassword;
-	@NotEmpty(message = "Field should not be Empty")
-	@Column(unique = false)
-	private String confirmpassword;
+	@NotEmpty(message = "Field should not be Empty") @Email
+	private String emailId;
+	
 	@Column(unique = true)
 	@Size(min = 10,max = 10,message = "Provide proper mobile number")
 	private String mobile;
-	@Column(unique = true)
-	@NotEmpty(message = "Field should not be Empty") @Email
-	private String emailid;
-	@NotNull
-	private String gender;
+	
+	@Size(min=6,message="Usrname must be at least 6 character")	
+	private String userName;
+	
+	
+	@NotEmpty(message = "Field should not be Empty")	
+	private String userPassword;
+	
+	@NotEmpty(message = "Field should not be Empty")
+	private String confirmPassword;
+	
 	
 	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	private List<Cart> cart;
-		
-	
-	public List<Cart> getCart() {
-		return cart;
-	}
-
-	public void setCart(List<Cart> cart) {
-		this.cart = cart;
-	}
-
-	
+	private List<Cart> cart;	
 	
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-
-
 
 	public int getUserId() {
 		return userId;
@@ -72,47 +63,77 @@ public class User {
 		this.userId = userId;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getFullName() {
+		return fullName;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
-	public String getUserpassword() {
-		return userpassword;
+
+	public String getEmailId() {
+		return emailId;
 	}
-	public void setUserpassword(String userpassword) {
-		this.userpassword = userpassword;
+
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
-	public String getConfirmpassword() {
-		return confirmpassword;
-	}
-	public void setConfirmpassword(String confirmpassword) {
-		this.confirmpassword = confirmpassword;
-	}
+
+
 	public String getMobile() {
 		return mobile;
 	}
+
+
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-	public String getEmailid() {
-		return emailid;
+
+
+	public String getUserName() {
+		return userName;
 	}
-	public void setEmailid(String emailid) {
-		this.emailid = emailid;
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-	public String getGender() {
-		return gender;
+
+
+	public String getUserPassword() {
+		return userPassword;
 	}
-	public void setGender(String gender) {
-		this.gender = gender;
+
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
+
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	public List<Cart> getCart() {
+		return cart;
+	}
+
+	public void setCart(List<Cart> cart) {
+		this.cart = cart;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", username=" + username + ", userpassword=" + userpassword
-				+ ", confirmpassword=" + confirmpassword + ", mobile=" + mobile + ", emailid=" + emailid + ", gender="
-				+ gender + ", cart=" + cart + "]";
+		return "User [userId=" + userId + ", fullName=" + fullName + ", emailid=" + emailId + ", mobile=" + mobile
+				+ ", username=" + userName + ", userpassword=" + userPassword + ", confirmpassword=" + confirmPassword
+				+ ", cart=" + cart + "]";
 	}
+
 	
 }

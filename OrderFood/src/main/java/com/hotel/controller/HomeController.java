@@ -1,35 +1,64 @@
 package com.hotel.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.hotel.constants.JspConstants;
+import com.hotel.constants.UrlMappingConstants;
 import com.hotel.model.FoodItems;
-import com.hotel.service.UserService;
+import com.hotel.service.FoodItemService;
 
 @Controller
 public class HomeController {
+		
+	private static final Object HOME = "Home";
+
+	private static final String VEG = "Veg";
+
+	private static final String ORDERLIST = "orderlist";
 	
+	private static final String NONVEG = "Non-Veg";
+
+	private static final Object TITLE_VEG = "Select Veg";
 	
-	@RequestMapping("/")
+	private static final Object TITLE_NONVEG = "Select Non-Veg";
+	
+	@Autowired
+	private FoodItemService foodItemService;
+	
+	@GetMapping("/")
 	public String home(Model m) {
-		m.addAttribute("title", "Home");
-		return "index";
+		m.addAttribute(JspConstants.TITLE, HOME);
+		return UrlMappingConstants.HOTEL_MERCHANT_USER_HOME;
 	}
 	
-	@RequestMapping("/logout")
-	public String logOut(HttpSession session) {
-		
-		session.removeAttribute("email");
-		session.removeAttribute("userid");
-		session.invalidate();
-		return "login";
+	@GetMapping(value=UrlMappingConstants.HOTEL_MERCHANT_VEG)
+	public ModelAndView selectVeg(HttpSession session) {
+		ModelAndView modelAndView = new ModelAndView(UrlMappingConstants.HOTEL_MERCHANT_ORDER);
+
+		String veg = VEG;
+		List<FoodItems> list = foodItemService.getVeg(veg);
+		modelAndView.addObject(ORDERLIST, list);
+		modelAndView.addObject(JspConstants.TITLE, TITLE_VEG);
+		return modelAndView;
+	}
+
+	@RequestMapping(value = UrlMappingConstants.HOTEL_MERCHANT_NONVEG)
+	public ModelAndView selectNonveg() {
+		ModelAndView modelAndView = new ModelAndView(UrlMappingConstants.HOTEL_MERCHANT_ORDER);
+		String nonveg = NONVEG;
+		List<FoodItems> list = this.foodItemService.getNonVeg(nonveg);
+		modelAndView.addObject(ORDERLIST, list);
+		modelAndView.addObject(JspConstants.TITLE, TITLE_NONVEG);
+		return modelAndView;
 	}
 	
 	

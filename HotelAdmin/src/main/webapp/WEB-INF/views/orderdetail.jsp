@@ -1,18 +1,49 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<%@include file="base.jsp"%>
 <meta charset="UTF-8">
+<%@include file="base.jsp"%>
 <title>Insert title here</title>
 </head>
 <body>
-<%@include file="nav.jsp" %>
-<c:forEach items="${ordereddata}" var="od">
-	 <div>${od.orderid}</div>  
-	 <div>${od.cartItemName}</div>
-	 <div>${od.cartPrice}</div>
-</c:forEach>
+	<header><%@include file="nav.jsp"%></header>
+	<div class="container">
+		<div class="row">
+			<div class="span5">
+				<table class="table table-striped table-condensed">
+					<thead>
+						<tr>
+							<th>OrderId</th>
+							
+							<th>Date registered</th>
+							<th>Item Name</th>
+							<th>Price</th>
+							<th>Status</th>
+							<th>User Id</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${ordereddata}" var="orderedData">
+							<tr>
+								<td rowspan="">${orderedData.orderId}</td>
+								
+								<td>${orderedData.orderedDate}</td>
+								<td>${orderedData.cartItemName }</td>
+								<td>${orderedData.cartPrice }</td>
+								<td><span class="label label-success">Pending</span></td>
+								<td> ${ordereddata.userId}</td>
+								
+							</tr>
+						</c:forEach>
+
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

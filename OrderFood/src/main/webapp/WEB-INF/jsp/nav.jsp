@@ -14,9 +14,9 @@
 				href="<%=request.getContextPath() + "/"%>">Home <span
 					class="sr-only">(current)</span>
 			</a></li>
-			<li class="nav-item"><a class="nav-link text-white" href="${pageContext.request.contextPath}/selectveg">Order</a>
+			<li class="nav-item"><a class="nav-link text-white" href="selectveg">Order</a>
 			</li>
-			<li class="nav-item"><a class="nav-link text-white" href="${pageContext.request.contextPath}/login"><i
+			<li class="nav-item"><a class="nav-link text-white" href="login"><i
 					class="fas fa-id-badge"></i></a></li>
 		</ul>
 		<a class="nav-link text-white" href="${pageContext.request.contextPath}/cart"><i class="fas fa-cart-plus"></i></a> 

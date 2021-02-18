@@ -11,8 +11,8 @@ public class FoodItems {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int fid;
-	private String itemname;
-	private String price;
+	private String itemName;
+	private int price;
 	private String type;
 	
 	
@@ -28,23 +28,23 @@ public class FoodItems {
 	public void setId(int id) {
 		this.fid = id;
 	}
-	public String getItemname() {
-		return itemname;
+	public String getItemName() {
+		return itemName;
 	}
-	public void setItemname(String itemname) {
-		this.itemname = itemname;
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
-	public String getPrice() {
+	public int getPrice() {
 		return price;
 	}
-	public void setPrice(String price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 	
-	public FoodItems(int fid, String itemname, String price, String type) {
+	public FoodItems(int fid, String itemName, int price, String type) {
 		super();
 		this.fid = fid;
-		this.itemname = itemname;
+		this.itemName = itemName;
 		this.price = price;
 		this.type = type;
 	}
@@ -54,7 +54,7 @@ public class FoodItems {
 	}
 	@Override
 	public String toString() {
-		return "FoodItems [id=" + fid + ", itemname=" + itemname + ", price=" + price + ", type=" + type + "]";
+		return "FoodItems [id=" + fid + ", itemName=" + itemName + ", price=" + price + ", type=" + type + "]";
 	}
 	
 	

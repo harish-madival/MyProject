@@ -4,7 +4,7 @@
 <style type="text/css">
 	.carousel_set{
 		height:450px;
-	}
+	}	
 </style>
 </head>
 <body class="menu">
@@ -47,5 +47,6 @@
 			</div>
 		</div>
 	</div>
+	<div><%@include file="footer.jsp" %></div>
 </body>
 </html>

@@ -23,7 +23,7 @@
 		<tbody>
 			<c:forEach items="${ orderDetail}" var="ordereddta">
 				<tr>
-					<th>${ordereddta.orderid}</th>
+					<th>${ordereddta.orderId}</th>
 					<td>${ordereddta.cartItemName }</td>
 					<td>${ordereddta.cartPrice }</td>
 					

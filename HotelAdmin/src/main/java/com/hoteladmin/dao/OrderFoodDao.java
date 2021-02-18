@@ -15,7 +15,6 @@ public class OrderFoodDao {
 	private OrderFoodRepo orderFoodRepo;
 
 	public List<OrderDetail> getOrderedData() {
-		// TODO Auto-generated method stub
 		return this.orderFoodRepo.findAll();
 	}
 	

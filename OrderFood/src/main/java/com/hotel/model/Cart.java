@@ -1,7 +1,5 @@
 package com.hotel.model;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -10,9 +8,11 @@ import javax.persistence.ManyToOne;
 public class Cart {
 	@Id
 	private int id;
-	private int userid;
-	private String itemname;
-	private String price;
+	private int userId;
+	private String itemName;
+	private int quantity;
+	private int price;
+	private long totalPrice;
 	
 	@ManyToOne
 	private User user;
@@ -21,46 +21,63 @@ public class Cart {
 	public User getUser() {
 		return user;
 	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-	public int getUserid() {
-		return userid;
-	}
-	public void setUserid(int userid) {
-		this.userid = userid;
-	}
-	
-	
-	
-	public Cart() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
 	
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getItemname() {
-		return itemname;
+
+	public int getUserId() {
+		return userId;
 	}
-	public void setItemname(String itemname) {
-		this.itemname = itemname;
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
-	public String getPrice() {
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public int getPrice() {
 		return price;
 	}
-	public void setPrice(String price) {
+
+	public void setPrice(int price) {
 		this.price = price;
 	}
+
+	public long getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(long totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
-		return "Cart [id=" + id + ", userid=" + userid + ", itemname=" + itemname + ", price=" + price + ", user="
-				+ user + "]";
+		return "Cart [id=" + id + ", userid=" + userId + ", itemname=" + itemName + ", quantity=" + quantity
+				+ ", price=" + price + ", totalprice=" + totalPrice + ", user=" + user + "]";
 	}
 	
 	
