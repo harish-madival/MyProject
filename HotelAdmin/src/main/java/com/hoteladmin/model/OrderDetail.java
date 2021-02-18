@@ -9,65 +9,86 @@ import javax.persistence.Id;
 @Entity
 public class OrderDetail {
 	@Id	
-	private int id;
-	
-	
-	private Date ordereddate;
-	private long orderid;
-	private int cartid;
+	private int id;	
+	private Date orderedDate;
+	private long orderId;
+	private int cartId;
 	private String cartItemName;
 	private String cartPrice;
-	private int userid;
-	
-	public Date getOrdereddate() {
-		return ordereddate;
-	}
-	public void setOrdereddate(Date ordereddate) {
-		this.ordereddate = ordereddate;
-	}
+	private int userId;
 	
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public OrderDetail() {		
+
+	public Date getOrderedDate() {
+		return orderedDate;
 	}
-	public long getOrderid() {
-		return orderid;
+
+	public void setOrderedDate(Date orderedDate) {
+		this.orderedDate = orderedDate;
 	}
-	public void setOrderid(long orderid) {
-		this.orderid = orderid;
+
+
+
+	public long getOrderId() {
+		return orderId;
 	}
-	public int getCartid() {
-		return cartid;
+
+
+
+	public void setOrderId(long orderId) {
+		this.orderId = orderId;
 	}
-	public void setCartid(int cartid) {
-		this.cartid = cartid;
+
+
+
+	public int getCartId() {
+		return cartId;
 	}
+
+
+
+	public void setCartId(int cartId) {
+		this.cartId = cartId;
+	}
+
+
+
 	public String getCartItemName() {
 		return cartItemName;
 	}
+
+
+
 	public void setCartItemName(String cartItemName) {
 		this.cartItemName = cartItemName;
 	}
+
 	public String getCartPrice() {
 		return cartPrice;
 	}
+
 	public void setCartPrice(String cartPrice) {
 		this.cartPrice = cartPrice;
 	}
-	public int getUserid() {
-		return userid;
+
+	public int getUserId() {
+		return userId;
 	}
-	public void setUserid(int userid) {
-		this.userid = userid;
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
+
 	@Override
 	public String toString() {
-		return "OrderDetail [id=" + id + ", ordereddate=" + ordereddate + ", orderid=" + orderid + ", cartid=" + cartid
-				+ ", cartItemName=" + cartItemName + ", cartPrice=" + cartPrice + ", userid=" + userid + "]";
+		return "OrderDetail [id=" + id + ", ordereddate=" + orderedDate + ", orderid=" + orderId + ", cartid=" + cartId
+				+ ", cartItemName=" + cartItemName + ", cartPrice=" + cartPrice + ", userid=" + userId + "]";
 	}	
 	
 	
