@@ -50,7 +50,7 @@
 					<form class="omb_loginForm" action="login" method="post">
 						<div class="input-group">
 							<span class="input-group-addon mr-2"><i class="fa fa-user"></i></span>
-							<input type="text" class="form-control" name="emailId"
+							<input type="text" class="form-control" name="userName"
 								placeholder="email address">
 						</div>
 						<span class="help-block"></span>

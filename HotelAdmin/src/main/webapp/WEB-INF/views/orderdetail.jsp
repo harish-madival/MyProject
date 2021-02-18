@@ -34,7 +34,7 @@
 								<td>${orderedData.cartItemName }</td>
 								<td>${orderedData.cartPrice }</td>
 								<td><span class="label label-success">Pending</span></td>
-								<td> ${ordereddata.userId}</td>
+								<td> ${orderedData.userId}</td>
 								
 							</tr>
 						</c:forEach>

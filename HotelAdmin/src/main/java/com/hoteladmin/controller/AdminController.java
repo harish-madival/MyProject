@@ -63,7 +63,7 @@ public class AdminController {
 
 		Comparator<OrderDetail> byOrderedDate = new Comparator<OrderDetail>() {
 			public int compare(OrderDetail c1, OrderDetail c2) {
-				return Long.valueOf(c1.getOrdereddate().getTime()).compareTo(c2.getOrdereddate().getTime());
+				return Long.valueOf(c1.getOrderedDate().getTime()).compareTo(c2.getOrderedDate().getTime());
 			}
 		};
 

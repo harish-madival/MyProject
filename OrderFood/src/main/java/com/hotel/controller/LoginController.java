@@ -30,8 +30,6 @@ import com.hotel.service.UserService;
 
 @Controller
 public class LoginController {
-	
-	
 
 	private static final String LOGIN_STATUS = "loginfailed";
 
@@ -81,6 +79,8 @@ public class LoginController {
 
 	private static final String USER_PASSWORD = "userPassword";
 
+	private static final String USERNAME = "userName";
+
 	@Autowired
 	private UserService userService;
 
@@ -88,7 +88,7 @@ public class LoginController {
 	private OrderService orderService;
 
 	@GetMapping(value = UrlMappingConstants.HOTEL_MERCHANT_USER_LOGIN)
-	public ModelAndView loginPage(HttpSession session,HttpServletRequest request) {
+	public ModelAndView loginPage(HttpSession session, HttpServletRequest request) {
 		ModelAndView mdv = new ModelAndView();
 
 		if (session.getAttribute(UrlMappingConstants.SESSION_USER_EMAIL_ID) != null) {
@@ -109,21 +109,20 @@ public class LoginController {
 	}
 
 	@PostMapping(value = UrlMappingConstants.HOTEL_MERCHANT_USER_LOGIN)
-	public ModelAndView login(@RequestParam(EMAILID) String emailId, @RequestParam(USER_PASSWORD) String userPassword, HttpSession session,
-			Model m) {
+	public ModelAndView login(@RequestParam(USERNAME) String userName, @RequestParam(USER_PASSWORD) String userPassword,
+			HttpSession session, Model m) {
 		ModelAndView mv = new ModelAndView(UrlMappingConstants.HOTEL_MERCHANT_USER_HOME);
 
-		User u = userService.validateUser(emailId, userPassword);
-		int uid = u.getUserId();
-		
-		if (u.getEmailId().equals(emailId)){
-			session.setAttribute(UrlMappingConstants.SESSION_USER_EMAIL_ID, emailId);
-			session.setAttribute(UrlMappingConstants.SESSION_USER_ID, uid);
+		try {
+			User u = userService.validateUser(userName, userPassword);
+			session.setAttribute(UrlMappingConstants.SESSION_USER_EMAIL_ID, userName);
+			session.setAttribute(UrlMappingConstants.SESSION_USER_ID, u.getUserId());
 			mv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_HOME);
-		} else {
-			m.addAttribute(LOGIN_STATUS, LOGIN_STATUS_MESSAGE);
+		} catch (NullPointerException e) {
+			mv.addObject(LOGIN_STATUS, LOGIN_STATUS_MESSAGE);
 			mv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_LOGIN);
 		}
+
 		m.addAttribute(JspConstants.TITLE, LOGIN_TITLE);
 		return mv;
 	}
@@ -146,8 +145,8 @@ public class LoginController {
 
 		try {
 			if (user.getUserPassword().equals(user.getConfirmPassword())) {
-				userService.createUser(user);				
-				modelAndView.addObject(REGISTRATION_STATUS,REGISTRATION_STATUS_MESSAGE);
+				userService.createUser(user);
+				modelAndView.addObject(REGISTRATION_STATUS, REGISTRATION_STATUS_MESSAGE);
 			} else {
 				modelAndView.addObject("passworderror", "password mismatch");
 			}
@@ -199,8 +198,9 @@ public class LoginController {
 		return mdv;
 	}
 
-	@PostMapping(value =UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE_UPDATE )
-	public ModelAndView updateProfile(HttpSession session, @Valid @ModelAttribute(USERINFO) User user, BindingResult result) {
+	@PostMapping(value = UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE_UPDATE)
+	public ModelAndView updateProfile(HttpSession session, @Valid @ModelAttribute(USERINFO) User user,
+			BindingResult result) {
 		ModelAndView mdv = new ModelAndView(UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE);
 
 		if (session.getAttribute(UrlMappingConstants.SESSION_USER_EMAIL_ID) != null) {
@@ -214,7 +214,7 @@ public class LoginController {
 			User updatedata = this.userService.updateData(userdata);
 			mdv.addObject(USERINFO, updatedata);
 			mdv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE);
-			
+
 		} else {
 			mdv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_LOGIN);
 			mdv.addObject(JspConstants.TITLE, LOGIN_TITLE);
@@ -246,7 +246,7 @@ public class LoginController {
 		return mdv;
 	}
 
-	@PostMapping(value=UrlMappingConstants.HOTEL_MERCHANT_USER_VALIDATE_PASSWORD_FOR_EDIT)
+	@PostMapping(value = UrlMappingConstants.HOTEL_MERCHANT_USER_VALIDATE_PASSWORD_FOR_EDIT)
 	public ModelAndView validatePasswordForEditProfile(HttpSession session, @RequestParam(PASSWORD) String checkpass) {
 
 		ModelAndView mdv = new ModelAndView(UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE);
@@ -256,8 +256,8 @@ public class LoginController {
 			User user = this.userService.getUserData(uid);
 			if (user.getUserPassword().equals(checkpass)) {
 				mdv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE_EDIT);
-				mdv.addObject(USERINFO, user);				
-			}else {
+				mdv.addObject(USERINFO, user);
+			} else {
 				mdv.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE);
 				mdv.addObject(MATCH_PASSWORD, MATCH_PASSWORD_STATUS);
 				mdv.addObject(USERINFO, user);
@@ -269,11 +269,10 @@ public class LoginController {
 
 		return mdv;
 	}
-	
-	@PostMapping(value=UrlMappingConstants.HOTEL_MERCHANT_USER_VALIDATE_PASSWORD_FOR_DELETE)
-	public ModelAndView validatePasswordForDeleteAccount(HttpSession session, 
-			@RequestParam(PASSWORD) String checkpass, HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+
+	@PostMapping(value = UrlMappingConstants.HOTEL_MERCHANT_USER_VALIDATE_PASSWORD_FOR_DELETE)
+	public ModelAndView validatePasswordForDeleteAccount(HttpSession session, @RequestParam(PASSWORD) String checkpass,
+			HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		ModelAndView rdv = new ModelAndView(UrlMappingConstants.HOTEL_MERCHANT_USER_PROFILE);
 		RequestDispatcher rd;
@@ -282,11 +281,11 @@ public class LoginController {
 
 			User user = this.userService.getUserData(uid);
 			if (user.getUserPassword().equals(checkpass)) {
-				
+
 				response.sendRedirect(UrlMappingConstants.HOTEL_MERCHANT_USER_DELETE_ACCOUNT);
-			}else {
-				request.setAttribute(MATCH_PASSWORD,MATCH_PASSWORD_STATUS);
-				rd=request.getRequestDispatcher(PROFILE_PAGE);
+			} else {
+				request.setAttribute(MATCH_PASSWORD, MATCH_PASSWORD_STATUS);
+				rd = request.getRequestDispatcher(PROFILE_PAGE);
 				rd.forward(request, response);
 			}
 		} else {
@@ -295,10 +294,10 @@ public class LoginController {
 
 		return rdv;
 	}
-	
+
 	@GetMapping(value = UrlMappingConstants.HOTEL_MERCHANT_USER_LOGOUT)
 	public String logOut(HttpSession session) {
-		
+
 		session.removeAttribute(UrlMappingConstants.SESSION_USER_EMAIL_ID);
 		session.removeAttribute(UrlMappingConstants.SESSION_USER_ID);
 		session.invalidate();
