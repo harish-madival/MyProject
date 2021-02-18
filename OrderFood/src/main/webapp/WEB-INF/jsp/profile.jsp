@@ -16,7 +16,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-10">
-				<h1>User name</h1>
+				<h1>${user.fullName}</h1>
 			</div>
 			<div class="col-sm-2">
 				<a href="/users" class="pull-right"><img title="profile image"
@@ -62,10 +62,10 @@
 						<div class="form-group">
 
 							<div class="col-xs-6">
-								<label for="fullName"><h4>Full Name</h4></label> <input
+								<label for="fullName"><h4>User Name</h4></label> <input
 									type="text" class="form-control" name="fullName" id="fullName"
 									placeholder="Full Name" disabled
-									title="enter your first name if any." value="${user.fullName}">
+									title="enter your first name if any." value="${user.userName}">
 							</div>
 						</div>
 						<div class="form-group">
