@@ -69,7 +69,7 @@
 				</p>
 				<form action="register" method="post">
 					<div role="alert">
-						<form:errors path="u.fullName" class="error" />
+						<form:errors path="user.fullName" class="error" />
 					</div>
 					<div class="form-group input-group">
 						<div class="input-group-prepend">
@@ -82,7 +82,7 @@
 					</div>
 
 					<div role="alert">
-						<form:errors path="u.emailId" class="error" />
+						<form:errors path="user.emailId" class="error" />
 						<div class="error">${emerror}</div>
 					</div>
 					<!-- form-group// -->
@@ -99,7 +99,7 @@
 
 					<!-- form-group// -->
 					<div role="alert">
-						<form:errors path="u.mobile" class="error" />
+						<form:errors path="user.mobile" class="error" />
 						<div class="error">${mberror}</div>
 					</div>
 					<div id="demo"></div>
@@ -119,7 +119,7 @@
 
 					<!-- form-group// -->
 					<div role="alert">
-						<form:errors path="u.userName" class="error" />
+						<form:errors path="user.userName" class="error" />
 						<div class="error">${unerror}</div>
 					</div>
 					<div class="form-group input-group">
@@ -133,7 +133,7 @@
 
 					<!-- form-group end.// -->
 					<div role="alert">
-						<form:errors path="u.userPassword" class="error" />
+						<form:errors path="user.userPassword" class="error" />
 					</div>
 					<div class="form-group input-group">
 						<div class="input-group-prepend">
@@ -163,7 +163,7 @@
 					</div>
 					<!-- form-group// -->
 					<div role="alert">
-						<form:errors path="u.confirmPassword" class="error" />
+						<form:errors path="user.confirmPassword" class="error" />
 						<div class="error">${passworderror }</div>
 					</div>
 					<div class="form-group input-group">
@@ -267,7 +267,6 @@
     text = "Input OK";
     return true;
   }
-  document.write(text);
   
 }
 	</script>

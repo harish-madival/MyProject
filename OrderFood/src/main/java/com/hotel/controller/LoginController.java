@@ -147,9 +147,9 @@ public class LoginController {
 			modelAndView.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_REGISTRATION);
 			return modelAndView;
 		}
-		int uid=user.getUserId();
-		List<Cart> cart=cartService.getAllCartedDataByUid(uid);
-		user.setCart(cart);
+//		int uid=user.getUserId();
+//		List<Cart> cart=cartService.getAllCartedDataByUid(uid);
+//		user.setCart(cart);
 		try {
 			if (user.getUserPassword().equals(user.getConfirmPassword())) {
 				userService.createUser(user);

@@ -48,7 +48,7 @@ public class User {
 	private String confirmPassword;
 	
 	
-	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
 	private List<Cart> cart;	
 	
 	public User() {
