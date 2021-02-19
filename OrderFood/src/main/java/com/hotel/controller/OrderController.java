@@ -21,9 +21,11 @@ import com.hotel.constants.UrlMappingConstants;
 import com.hotel.model.Cart;
 import com.hotel.model.FoodItems;
 import com.hotel.model.OrderDetail;
+import com.hotel.model.User;
 import com.hotel.service.CartService;
 import com.hotel.service.FoodItemService;
 import com.hotel.service.OrderService;
+import com.hotel.service.UserService;
 
 @Controller
 public class OrderController {
@@ -56,6 +58,9 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private UserService userService;
 
 	
 
@@ -86,12 +91,14 @@ public class OrderController {
 		if (session.getAttribute(UrlMappingConstants.SESSION_USER_EMAIL_ID) != null) {
 			FoodItems food = this.foodItemService.getdata(id);
 			int uid = (Integer) session.getAttribute("userid");
+			User user=userService.getUserData(uid);
 			Random rand = new Random();
 			int cid = rand.nextInt(1000);			
 			cart.setId(cid);
 			cart.setItemName(food.getItemName());
 			cart.setPrice(food.getPrice());
-			cart.setUserId(uid);
+			//cart.setUserId(uid);
+			cart.setUser(user);
 			totalprice=cart.getPrice() * cart.getQuantity();
 			cart.setTotalPrice(totalprice);
 			subtotal=subtotal+totalprice;
@@ -136,7 +143,7 @@ public class OrderController {
 				od.setCartId(cart.getId());
 				od.setCartItemName(cart.getItemName());
 				od.setCartPrice(cart.getTotalPrice());
-				od.setUserId(cart.getUserId());
+				od.setUserId(uid);
 				od1 = this.orderService.addOrderedData(od);
 				if (od1 != null) {
 					this.cartService.deleteData(cart.getId());
