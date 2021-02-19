@@ -23,7 +23,7 @@ public class CartDao {
 	}
 
 	public List<Cart> getCartDataById(int uid) {
-		return this.cartRepo.findByUserId(uid);
+		return this.cartRepo.getCartedData(uid);
 	}
 
 }

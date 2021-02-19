@@ -1,5 +1,6 @@
 package com.hotel.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -8,7 +9,7 @@ import javax.persistence.ManyToOne;
 public class Cart {
 	@Id
 	private int id;
-	private int userId;
+	//private int userId;
 	private String itemName;
 	private int quantity;
 	private int price;
@@ -30,13 +31,13 @@ public class Cart {
 		this.id = id;
 	}
 
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
+//	public int getUserId() {
+//		return userId;
+//	}
+//
+//	public void setUserId(int userId) {
+//		this.userId = userId;
+//	}
 
 	public String getItemName() {
 		return itemName;
@@ -76,9 +77,11 @@ public class Cart {
 
 	@Override
 	public String toString() {
-		return "Cart [id=" + id + ", userid=" + userId + ", itemname=" + itemName + ", quantity=" + quantity
-				+ ", price=" + price + ", totalprice=" + totalPrice + ", user=" + user + "]";
+		return "Cart [id=" + id + ", itemName=" + itemName + ", quantity=" + quantity + ", price=" + price
+				+ ", totalPrice=" + totalPrice + ", user=" + user + "]";
 	}
+
+	
 	
 	
 }

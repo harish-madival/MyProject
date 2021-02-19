@@ -15,24 +15,20 @@ public class CartService {
 	
 	
 	public void addtocart(Cart cart) {
-		// TODO Auto-generated method stub
 		this.cartDao.addtocart(cart);
 		
 	}
 
 	public void delete(int id) {
-		// TODO Auto-generated method stub
 		this.cartDao.deleteCartedData(id);
 	}
 
 
 	public List<Cart> getAllCartedDataByUid(int uid) {
-		// TODO Auto-generated method stub
 		return this.cartDao.getCartDataById(uid);
 	}
 
 	public void deleteData(int id) {
-		// TODO Auto-generated method stub
 		this.cartDao.deleteCartedData(id);
 	}
 }

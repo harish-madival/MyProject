@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.hotel.constants.JspConstants;
 import com.hotel.constants.UrlMappingConstants;
+import com.hotel.model.Cart;
 import com.hotel.model.OrderDetail;
 import com.hotel.model.User;
+import com.hotel.service.CartService;
 import com.hotel.service.OrderService;
 import com.hotel.service.UserService;
 
@@ -86,6 +88,9 @@ public class LoginController {
 
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private CartService cartService;
 
 	@GetMapping(value = UrlMappingConstants.HOTEL_MERCHANT_USER_LOGIN)
 	public ModelAndView loginPage(HttpSession session, HttpServletRequest request) {
@@ -142,7 +147,9 @@ public class LoginController {
 			modelAndView.setViewName(UrlMappingConstants.HOTEL_MERCHANT_USER_REGISTRATION);
 			return modelAndView;
 		}
-
+//		int uid=user.getUserId();
+//		List<Cart> cart=cartService.getAllCartedDataByUid(uid);
+//		user.setCart(cart);
 		try {
 			if (user.getUserPassword().equals(user.getConfirmPassword())) {
 				userService.createUser(user);
