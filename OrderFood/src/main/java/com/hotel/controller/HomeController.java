@@ -16,6 +16,8 @@ import com.hotel.constants.UrlMappingConstants;
 import com.hotel.model.FoodItems;
 import com.hotel.service.FoodItemService;
 
+//testing
+
 @Controller
 public class HomeController {
 		

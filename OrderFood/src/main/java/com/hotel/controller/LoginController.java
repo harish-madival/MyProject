@@ -29,7 +29,7 @@ import com.hotel.model.User;
 import com.hotel.service.CartService;
 import com.hotel.service.OrderService;
 import com.hotel.service.UserService;
-
+//testing
 @Controller
 public class LoginController {
 
