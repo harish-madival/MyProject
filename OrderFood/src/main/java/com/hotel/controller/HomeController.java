@@ -31,6 +31,8 @@ public class HomeController {
 	
 	private static final Object TITLE_NONVEG = "Select Non-Veg";
 	
+	private static final Object TITLE_NONVEG2 = "Select Non-Veg2";
+	
 	@Autowired
 	private FoodItemService foodItemService;
 	
