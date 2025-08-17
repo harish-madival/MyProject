@@ -25,7 +25,7 @@ import com.hotel.auth.security.JwtTokenUtil;
 import com.hotel.auth.service.OtpService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/login")
 public class AuthController {
 
 	@Autowired
@@ -98,7 +98,7 @@ public class AuthController {
 		return mobileNumber != null && mobileNumber.matches("^\\d{10,15}$");
 	}
 	
-	@PostMapping("/login")
+	@PostMapping
 	public ResponseEntity<?> login(@RequestBody LogInDetails loginDetails) {
 		String userName = loginDetails.getUserName();
 		String password = loginDetails.getPassword();
@@ -115,12 +115,6 @@ public class AuthController {
         } catch (Exception e) {
             return null;
         }
-		return null;
-	}
-	
-	@PostMapping("/register")
-	public ResponseEntity<?> register(@RequestBody User user) {
-		
 		return null;
 	}
 }

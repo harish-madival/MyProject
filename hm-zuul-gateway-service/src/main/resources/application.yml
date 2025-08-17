@@ -47,12 +47,12 @@ zuul:
     max-semaphores: 500
   routes:
     auth-service:
-      path: /hotel/auth/login/**
+      path: /hotel/auth/**
       serviceId: hm-auth-service
       stripPrefix: false
       sensitiveHeaders: Cookie,Set-Cookie
     food-service:
-      path: /food/**
+      path: /hotel/food/**
       url: http://localhost:9091/
       stripPrefix: false
 
