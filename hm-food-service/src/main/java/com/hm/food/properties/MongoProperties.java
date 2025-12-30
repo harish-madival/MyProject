@@ -3,13 +3,11 @@ package com.hm.food.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 @Component
 @ConfigurationProperties(prefix = "spring.data.mongodb")
-@Getter
-@Setter
+@Data
 public class MongoProperties {
 	private String hosts;
 	private String database;

@@ -18,7 +18,7 @@ public class PostResponseLogFilter extends ZuulFilter {
 
 	@Override
 	public int filterOrder() {
-		return 10;
+		return 1;
 	}
 
 	@Override

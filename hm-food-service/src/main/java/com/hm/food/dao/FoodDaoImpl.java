@@ -21,6 +21,7 @@ public class FoodDaoImpl implements FoodDao {
 	@Autowired
 	MongoTemplate mongoTemplate;
 
+	@Autowired
 	ConfigProperties configProperties;
 
 	@Override

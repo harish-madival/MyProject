@@ -15,6 +15,7 @@ import java.time.Instant;
 public class JwtTokenUtil {
 
     private final SecretKey signingKey;
+    
     private final long expirationMillis;
 
     public JwtTokenUtil(@Value("${jwt.secret}") String secret,
@@ -35,7 +36,7 @@ public class JwtTokenUtil {
         return Jwts.builder()
                 .subject(mobileNumber)
                 .issuedAt(Date.from(now))
-                .expiration(Date.from(now.plusMillis(expirationMillis)))
+                .expiration(Date.from(now.plusSeconds(expirationMillis)))
                 .signWith(signingKey)
                 .compact();
     }

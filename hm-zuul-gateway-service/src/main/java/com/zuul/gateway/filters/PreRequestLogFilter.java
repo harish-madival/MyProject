@@ -1,25 +1,93 @@
 package com.zuul.gateway.filters;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.hotel.common.model.UserEntity;
+import com.hotel.common.model.UserWithToken;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
-import javax.servlet.http.HttpServletRequest;
-import org.slf4j.Logger; 
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import com.zuul.gateway.feign.AuthFeignClient;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 
 @Component
 public class PreRequestLogFilter extends ZuulFilter {
-  private static final Logger log = LoggerFactory.getLogger(PreRequestLogFilter.class);
+	private static final Logger log = LoggerFactory.getLogger(PreRequestLogFilter.class);
 
-  @Override public String filterType() { return "pre"; }
-  @Override public int filterOrder() { return 1; }
-  @Override public boolean shouldFilter() { return true; }
+	private static final String SECRET = "a-very-long-secret-key-that-is-at-least-64-bytes-long................";
 
-  @Override
-  public Object run() {
-    RequestContext ctx = RequestContext.getCurrentContext();
-    HttpServletRequest req = ctx.getRequest();
-    log.info("{} {} from {} UA:{}", req.getMethod(), req.getRequestURI(), req.getRemoteAddr(), req.getHeader("User-Agent"));
-    return null;
-  }
+	@Autowired
+	private AuthFeignClient authFeignClient;
+
+	@Override
+	public String filterType() {
+		return "pre";
+	}
+
+	@Override
+	public int filterOrder() {
+		return 1;
+	}
+
+	@Override
+	public boolean shouldFilter() {
+		RequestContext ctx = RequestContext.getCurrentContext();
+		HttpServletRequest req = ctx.getRequest();
+		String path = req.getRequestURI();
+		return !path.startsWith("/fosys/auth/");
+	}
+
+	public Object run() {
+		RequestContext ctx = RequestContext.getCurrentContext();
+		HttpServletRequest req = ctx.getRequest();
+
+		String authHeader = req.getHeader("Authorization");
+
+		// Block if no auth header
+		if (authHeader == null || authHeader.isEmpty() || !authHeader.startsWith("Bearer ")) {
+			ctx.setSendZuulResponse(false);
+			ctx.setResponseStatusCode(401);
+			ctx.getResponse().setContentType("application/json");
+			ctx.setResponseBody("{\"status\": \"failure\",\"data\": {\"message\": \"Missing Authorization header\"}}");
+			return null;
+		}
+		String token = authHeader.substring(7);
+
+		if (!isValidToken(token)) {
+			ctx.setSendZuulResponse(false);
+			ctx.setResponseStatusCode(401);
+			ctx.getResponse().setContentType("application/json");
+			ctx.setResponseBody("{\"status\": \"failure\",\"data\": {\"message\": \"Token Expired\"}}");
+			return null;
+		}
+
+		UserWithToken validateToken = authFeignClient.validateToken(token);
+		UserEntity user = validateToken.getUser();
+		ctx.addZuulRequestHeader("userId", String.valueOf(user.getId()));
+
+		return null;
+	}
+
+	private boolean isValidToken(String token) {
+		try {
+			Claims claims = Jwts.parser().setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8)).parseClaimsJws(token)
+					.getBody();
+
+			// ✅ Check expiry
+			return claims.getExpiration() != null && claims.getExpiration().after(new Date());
+		} catch (JwtException e) {
+			log.error("Token validation failed: {}", e.getMessage());
+			return false;
+		}
+	}
 }

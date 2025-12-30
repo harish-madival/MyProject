@@ -6,6 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.hotel.common.util.FosysConstants.UserType;
+
 import lombok.Data;
 
 @Data
@@ -19,7 +21,7 @@ public class User {
 	@Indexed(unique = true)
 	private String mobileNumber;
 
-	private Roles roles;
+	private String roles;
 
 	@Indexed(unique = true)
 	private String username;
