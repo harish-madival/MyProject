@@ -71,31 +71,31 @@ ribbon:
   OkToRetryOnAllOperations: false
 
 # Hystrix wraps each route call to trip circuits on slow/failing upstreams
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          strategy: THREAD
-          thread:
-            timeoutInMilliseconds: 12000
-      circuitBreaker:
-        requestVolumeThreshold: 20
-        sleepWindowInMilliseconds: 10000
-        errorThresholdPercentage: 50
-      metrics:
-        rollingStats:
-          timeInMilliseconds: 10000
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          strategy: THREAD
+#          thread:
+#            timeoutInMilliseconds: 12000
+#      circuitBreaker:
+#        requestVolumeThreshold: 20
+#        sleepWindowInMilliseconds: 10000
+#        errorThresholdPercentage: 50
+#      metrics:
+#        rollingStats:
+#          timeInMilliseconds: 10000
 
 # Simple, centralized CORS (tighten for prod)
 # cors:
 #   allowedOrigins: "https://yourapp.com"
 #   allowedMethods: "GET,POST,PUT,DELETE,OPTIONS"
 #
-springdoc:
-  swagger-ui:
-    urls:
-      - name: auth-service
-        url: /hotel/auth/v3/api-docs
-      - name: food-service
-        url: /hotel/food/v3/api-docs
+#springdoc:
+#  swagger-ui:
+#    urls:
+#      - name: auth-service
+#        url: /fosys/auth/v3/api-docs
+#      - name: food-service
+#        url: /hotel/food/v3/api-docs

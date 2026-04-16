@@ -10,8 +10,9 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
-import com.hotel.auth.model.User;
-import com.hotel.auth.model.UserWithToken;
+import com.hotel.common.model.User;
+import com.hotel.common.model.UserWithToken;
+import com.hotel.common.util.FosysConstants;
 
 @Repository
 public class UserRepository {
@@ -25,8 +26,8 @@ public class UserRepository {
 	}
 
 	public Optional<User> findUser(String userId) {
-		Query query = new Query(new Criteria().orOperator(Criteria.where("mobileNumber").is(userId),
-				Criteria.where("userName").is(userId), Criteria.where("email").is(userId)));
+		Query query = new Query(new Criteria().orOperator(Criteria.where(FosysConstants.MOBILENUMBER).is(userId),
+				Criteria.where(FosysConstants.USERID).is(userId), Criteria.where(FosysConstants.EMAIL).is(userId)));
 		User user = mongoTemplate.findOne(query, User.class);
 		return Optional.ofNullable(user);
 	}
@@ -36,16 +37,16 @@ public class UserRepository {
 	}
 
 	public void saveTokenWithUserId(User user, String token) {
-		Query query = new Query(Criteria.where("user.id").is(user.getId()));
-		Update update = new Update().set("user", user).set("userToken", token).set("expiryTime",
-				LocalDateTime.now().plusSeconds(expirationMillis));
+		Query query = new Query(Criteria.where("user.userId").is(user.getUserId()));
+		Update update = new Update().set(FosysConstants.USER, user).set(FosysConstants.USER_TOKEN, token)
+				.set(FosysConstants.EXPIRE_TIME, LocalDateTime.now().plusSeconds(expirationMillis));
 
 		mongoTemplate.upsert(query, update, UserWithToken.class);
 
 	}
 
 	public UserWithToken getUserByToken(String token) {
-		return mongoTemplate.findOne(new Query().addCriteria(Criteria.where("userToken").is(token)),
+		return mongoTemplate.findOne(new Query().addCriteria(Criteria.where(FosysConstants.USER_TOKEN).is(token)),
 				UserWithToken.class);
 	}
 

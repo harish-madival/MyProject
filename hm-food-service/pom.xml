@@ -6,18 +6,16 @@
 	<parent>
 		<groupId>com.hm.parent</groupId>
 		<artifactId>hm-parent-service</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0.0-SNAPSHOT</version>
 		<relativePath>../hm-parent-service/pom.xml</relativePath>
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>hm-food-service</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>${food-service-version}</version>
 	<name>${hm-food-service-name}</name>
 	<description>HM Onboarding Service</description>
 	<properties>
 		<hm-food-service-name>hm-food-service</hm-food-service-name>
-		<java.version>1.8</java.version>
-		<spring-cloud.version>2021.0.5</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -51,6 +49,11 @@
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.6.15</version>
+		</dependency>
+		<dependency>
+			<groupId>com.hm.common</groupId>
+			<artifactId>CommonUtils</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>

@@ -1,40 +1,58 @@
 package com.hm.onboard.config;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
 @Configuration
 public class MongoConfig {
 
-	@Value("${hotel.mongodb.urls}")
-	public String mongoUrls;
-
-	@Value("${hotel.mongodb.database}")
-	public String dataBase;
+	@Autowired
+	private MongoProperties mongoProperties;
 
 	@Bean
-	MongoClient mongoClient() {
-		StringBuilder urls = new StringBuilder(String.format("mongodb://%s", mongoUrls));
-		ConnectionString connString = new ConnectionString(urls.toString());
-		MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(connString)
-				.applyToConnectionPoolSettings(
-						builder -> builder.minSize(5).maxSize(100).maxWaitTime(2000, TimeUnit.MILLISECONDS))
-				.build();
-		return MongoClients.create(settings);
+	public MongoClient mongoClient() {
+		List<ServerAddress> servers = Arrays.stream(mongoProperties.getHosts().split(",")).map(host -> {
+			String[] parts = host.split(":");
+			String hostname = parts[0].trim();
+			int port = parts.length > 1 ? Integer.parseInt(parts[1].trim()) : 27017;
+			return new ServerAddress(hostname, port);
+		}).collect(Collectors.toList());
+
+		MongoClientSettings.Builder settingsBuilder = MongoClientSettings.builder().applyToClusterSettings(builder -> {
+			builder.hosts(servers);
+			if (mongoProperties.getReplicaSet() != null && !mongoProperties.getReplicaSet().isEmpty()) {
+				builder.requiredReplicaSetName(mongoProperties.getReplicaSet());
+			}
+		}).applyToConnectionPoolSettings(
+				builder -> builder.maxSize(100).minSize(10).maxWaitTime(1000, TimeUnit.MILLISECONDS))
+				.applyToSocketSettings(
+						builder -> builder.connectTimeout(10, TimeUnit.SECONDS).readTimeout(15, TimeUnit.SECONDS))
+				.applyToSslSettings(builder -> builder.enabled(mongoProperties.isSsl()));
+
+		if (mongoProperties.getUsername() != null && !mongoProperties.getUsername().isEmpty()) {
+			MongoCredential credential = MongoCredential.createCredential(mongoProperties.getUsername(),
+					mongoProperties.getDatabase(), mongoProperties.getPassword().toCharArray());
+			settingsBuilder.credential(credential);
+		}
+
+		return MongoClients.create(settingsBuilder.build());
 	}
 
 	@Bean
-	MongoTemplate mongoTemplate() {
-		MongoTemplate mongoTemplate = new MongoTemplate(mongoClient(), "auth_service");
-		return mongoTemplate;
+	public MongoTemplate mongoTemplate() {
+		return new MongoTemplate(mongoClient(), mongoProperties.getDatabase());
 	}
 }

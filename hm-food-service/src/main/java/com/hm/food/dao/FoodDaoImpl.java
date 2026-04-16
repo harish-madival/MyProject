@@ -13,7 +13,7 @@ import com.hm.food.model.FoodItems;
 import com.hm.food.model.FoodList;
 import com.hm.food.properties.ConfigProperties;
 import com.hm.food.utils.FoodValidator;
-import com.hm.food.utils.HmConstants;
+import com.hotel.common.util.FosysConstants;
 
 @Repository
 public class FoodDaoImpl implements FoodDao {
@@ -33,8 +33,8 @@ public class FoodDaoImpl implements FoodDao {
 	public List<FoodList> getFoods(String userId, String userType, String filterKey, String filterValue, String sortBy,
 			String sortOrder, int skip, int limit) {
 		Query query = new Query();
-		query.addCriteria(new Criteria().andOperator(Criteria.where(HmConstants.USERID).is(userId),
-				Criteria.where(HmConstants.USER_TYPE).is(userType)));
+		query.addCriteria(new Criteria().andOperator(Criteria.where(FosysConstants.USERID).is(userId),
+				Criteria.where(FosysConstants.USER_TYPE).is(userType)));
 		if (FoodValidator.isNotBlankNotNull(filterKey) && FoodValidator.isNotBlankNotNull(filterValue)) {
 			query.addCriteria(Criteria.where(filterKey).regex(filterValue, "i"));
 		}
@@ -43,7 +43,7 @@ public class FoodDaoImpl implements FoodDao {
 			query.with(Sort.by(sortOrder, sortBy));
 
 		} else {
-			query.with(Sort.by(Sort.Direction.DESC, HmConstants.CREATED_DATE));
+			query.with(Sort.by(Sort.Direction.DESC, FosysConstants.CREATED_DATE));
 		}
 		query.skip(skip).limit(limit);
 
@@ -55,8 +55,8 @@ public class FoodDaoImpl implements FoodDao {
 	public int getFoodsCount(String userId, String userType, String filterKey, String filterValue, String sortBy,
 			String sortOrder) {
 		Query query = new Query();
-		query.addCriteria(new Criteria().andOperator(Criteria.where(HmConstants.USERID).is(userId),
-				Criteria.where(HmConstants.USER_TYPE).is(userType)));
+		query.addCriteria(new Criteria().andOperator(Criteria.where(FosysConstants.USERID).is(userId),
+				Criteria.where(FosysConstants.USER_TYPE).is(userType)));
 		if (FoodValidator.isNotBlankNotNull(filterKey) && FoodValidator.isNotBlankNotNull(filterValue)) {
 			query.addCriteria(Criteria.where(filterKey).regex(filterValue, "i"));
 		}
@@ -65,7 +65,7 @@ public class FoodDaoImpl implements FoodDao {
 			query.with(Sort.by(sortOrder, sortBy));
 
 		} else {
-			query.with(Sort.by(Sort.Direction.DESC, HmConstants.CREATED_DATE));
+			query.with(Sort.by(Sort.Direction.DESC, FosysConstants.CREATED_DATE));
 		}
 
 		return (int) mongoTemplate.count(query, FoodItems.class, configProperties.getFoodCollectionName());
@@ -75,21 +75,21 @@ public class FoodDaoImpl implements FoodDao {
 	@Override
 	public FoodList getFoods(String foodId, String userId) {
 		Query query = new Query();
-		query.addCriteria(Criteria.where(HmConstants.ID).is(foodId));
+		query.addCriteria(Criteria.where(FosysConstants.ID).is(foodId));
 		return mongoTemplate.findOne(query, FoodList.class, configProperties.getFoodCollectionName());
 	}
 
 	@Override
 	public FoodList updateFood(FoodList foodList, String userId, String userType) {
 		Query query = new Query();
-		query.addCriteria(Criteria.where(HmConstants.ID).is(foodList.getId()));
+		query.addCriteria(Criteria.where(FosysConstants.ID).is(foodList.getId()));
 		return mongoTemplate.findAndReplace(query, foodList, configProperties.getFoodCollectionName());
 	}
 
 	@Override
 	public void deleteFood(String foodId, String userId, String userType) {
 		Query query = new Query();
-		query.addCriteria(Criteria.where(HmConstants.ID).is(foodId));
+		query.addCriteria(Criteria.where(FosysConstants.ID).is(foodId));
 		mongoTemplate.findAndRemove(query, FoodList.class, configProperties.getFoodCollectionName());
 	}
 

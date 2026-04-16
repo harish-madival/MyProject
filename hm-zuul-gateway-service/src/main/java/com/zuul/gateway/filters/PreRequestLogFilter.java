@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.hotel.common.model.UserEntity;
+import com.hotel.common.model.User;
 import com.hotel.common.model.UserWithToken;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
@@ -44,7 +44,7 @@ public class PreRequestLogFilter extends ZuulFilter {
 		RequestContext ctx = RequestContext.getCurrentContext();
 		HttpServletRequest req = ctx.getRequest();
 		String path = req.getRequestURI();
-		return !path.startsWith("/fosys/auth/");
+		return !path.startsWith("/fosys/auth");
 	}
 
 	public Object run() {
@@ -72,8 +72,9 @@ public class PreRequestLogFilter extends ZuulFilter {
 		}
 
 		UserWithToken validateToken = authFeignClient.validateToken(token);
-		UserEntity user = validateToken.getUser();
-		ctx.addZuulRequestHeader("userId", String.valueOf(user.getId()));
+		User user = validateToken.getUser();
+		ctx.addZuulRequestHeader("userId", String.valueOf(user.getUserId()));
+		ctx.addZuulRequestHeader("userType", String.valueOf(user.getUserType()));
 
 		return null;
 	}
@@ -82,8 +83,6 @@ public class PreRequestLogFilter extends ZuulFilter {
 		try {
 			Claims claims = Jwts.parser().setSigningKey(SECRET.getBytes(StandardCharsets.UTF_8)).parseClaimsJws(token)
 					.getBody();
-
-			// ✅ Check expiry
 			return claims.getExpiration() != null && claims.getExpiration().after(new Date());
 		} catch (JwtException e) {
 			log.error("Token validation failed: {}", e.getMessage());

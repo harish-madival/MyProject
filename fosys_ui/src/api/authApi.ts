@@ -42,9 +42,15 @@ export const loginWithPasswordApi = (userName: string, password: string) => {
   });
 };
 
-export const createUserApi = (mobileNumber: string, password: string) => {
-  return api.post("/fosys/auth/create-user", {
+export const createUserApi = (mobileNumber: string, password: string, confirmPassword: string, userType: string, firstName: string, lastName: string, userName: string, email: string) => {
+  return api.post("/fosys/auth/user", {
     mobileNumber,
     password,
+    confirmPassword,
+    userName,
+    userType,
+    firstName,
+    lastName,
+    email
   });
 };

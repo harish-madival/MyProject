@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hm.onboard.model.HotelEntity;
 import com.hm.onboard.service.HotelService;
 import com.hotel.common.model.HmResponse;
+import com.hotel.common.util.FosysConstants.UserType;
 
 @RestController
 @RequestMapping("/hotel")
@@ -26,7 +27,7 @@ public class HotelController {
 
 	@PostMapping
 	public ResponseEntity<?> saveHotel(@RequestBody HotelEntity hotelEntity,
-			@RequestHeader(name = "userId") String userId) {
+			@RequestHeader(name = "userId") String userId, @RequestHeader(name = "userType") UserType userType) {
 
 		return new ResponseEntity<>(new HmResponse("SUCCESS", hotelService.saveHotelData(hotelEntity, userId)),
 				HttpStatus.OK);
@@ -34,7 +35,7 @@ public class HotelController {
 
 	@PutMapping
 	public ResponseEntity<?> updateHotel(@RequestBody HotelEntity hotelEntity,
-			@RequestHeader(name = "userId") String userId, @RequestParam(name = "hotelId") String hotelId) {
+			@RequestHeader(name = "userId") String userId, @RequestHeader(name = "userType") UserType userType, @RequestParam(name = "hotelId") String hotelId) {
 
 		hotelService.updateHotelData(hotelEntity, userId, hotelId);
 		return new ResponseEntity<>(new HmResponse("SUCCESS", "Hotel Updated."), HttpStatus.OK);
@@ -42,7 +43,7 @@ public class HotelController {
 
 	@GetMapping
 	public ResponseEntity<?> getHotels(@RequestHeader(name = "userId") String userId,
-			@RequestParam(name = "hotelId") String hotelId) {
+			@RequestParam(name = "hotelId", required = false) String hotelId) {
 
 		return new ResponseEntity<>(new HmResponse("SUCCESS", hotelService.getHotelData(userId, hotelId)), HttpStatus.OK);
 	}

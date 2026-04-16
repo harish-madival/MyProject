@@ -16,12 +16,23 @@ export default function Login() {
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
 
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showCreateUser, setShowCreateUser] = useState(false);
+  const [displayCreateUser, setDisplayCreateUser] = useState(false);
+  const [hide, setHide] = useState(true);
+  const [hideOtpLogin, setHideOtpLogin] = useState(true);
+  const [userType, setUserType] = useState("");
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -58,6 +69,8 @@ export default function Login() {
     } catch (err: any) {
       if (err.status === 404) {
         setShowCreateUser(true);
+        setOtpSent(false);
+        setHideOtpLogin(false);
       } else {
         setError(err.message);
       }
@@ -66,15 +79,21 @@ export default function Login() {
     }
   }
 
+  function registerUser() {
+    setHide(true);
+    setDisplayCreateUser(true);
+  }
+
   async function handleCreateUser(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     setLoading(true);
 
     try {
-      await createUserApi(mobile, password);
+      await createUserApi(mobile, password, confirmPassword ,userType, firstName, lastName, userName, email);
 
-      await loginWithPasswordApi(mobile, password);
+      const res = await loginWithPasswordApi(mobile, password);
+      sessionStorage.setItem("authToken", res?.data?.token);
       navigate(redirectTo, { replace: true });
       console.log("User created & logged in");
     } catch (err: any) {
@@ -91,7 +110,7 @@ export default function Login() {
 
     try {
       setLoading(true);
-      const res = await loginWithPasswordApi(username, password);
+      const res = await loginWithPasswordApi(userName, password);
       console.log("Password Login Success:", res);
       sessionStorage.setItem("authToken", res?.data?.token);
       navigate(redirectTo, { replace: true });
@@ -108,10 +127,15 @@ export default function Login() {
       setError("");
       setShowCreateUser(false)
       setOtpSent(false)
+      setHide(true);
+      setDisplayCreateUser(false);
     } else {
       setMode("password");
       setError("");
+      setHide(false);
+      setDisplayCreateUser(false);
     }
+
 
   }
 
@@ -132,7 +156,7 @@ export default function Login() {
             className={`btn btn-outline-primary ${mode === "password" ? "active" : ""}`}
             onClick={() => setModeAndError("password")}
           >
-            Username
+            User Name
           </button>
         </div>
 
@@ -165,23 +189,70 @@ export default function Login() {
                   onChange={(e) => setOtp(e.target.value)}
                   required
                 />
-                <button className="btn btn-success w-100" disabled={loading}>
-                  {loading ? "Verifying..." : "Login"}
-                </button>
+                {hideOtpLogin && (
+                  <button className="btn btn-success w-100" disabled={loading}>
+                    {loading ? "Verifying..." : "Login"}
+                  </button>
+                )}
               </form>
             )}
 
             {showCreateUser && (
+
               <form onSubmit={handleCreateUser}>
-                <div className="alert alert-info">
-                  Mobile not registered. Create account.
-                </div>
+                <select
+                  className="form-control mb-3"
+                  value={userType}
+                  onChange={(e) => setUserType(e.target.value)}
+                >
+                  <option value="">Select User Type</option>
+                  
+                  <option value="PARTNER">PARTNER</option>
+                  <option value="ENTERPRISE">ENTERPRISE</option>
+                </select>
 
                 <input
                   className="form-control mb-3"
                   placeholder="Mobile number"
                   value={mobile}
-                  disabled
+                  onChange={(e) => setMobile(e.target.value)}
+                  required
+                />
+
+                <input
+                  type="firstName"
+                  className="form-control mb-3"
+                  placeholder="First Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                />
+
+                <input
+                  type="lastName"
+                  className="form-control mb-3"
+                  placeholder="First Name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                />
+
+                <input
+                  type="userName"
+                  className="form-control mb-3"
+                  placeholder="User Name"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  required
+                />
+
+                <input
+                  type="email"
+                  className="form-control mb-3"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
 
                 <input
@@ -190,6 +261,15 @@ export default function Login() {
                   placeholder="Create Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+
+                <input
+                  type="confirmPassword"
+                  className="form-control mb-3"
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                 />
 
@@ -203,13 +283,13 @@ export default function Login() {
 
 
         {/* Username Password */}
-        {mode === "password" && (
+        {mode === "password" && !hide && (
           <form onSubmit={loginWithPassword}>
             <input
               className="form-control mb-3"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              placeholder="User Name"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
             />
             <input
               type="password"
@@ -223,6 +303,93 @@ export default function Login() {
             </button>
           </form>
         )}
+
+        {!hide && (
+          <button className="btn" onClick={registerUser}>
+            RegisterUser
+          </button>
+        )}
+        {displayCreateUser && (
+
+          <form onSubmit={handleCreateUser}>
+            <select
+              className="form-control mb-3"
+              value={userType}
+              onChange={(e) => setUserType(e.target.value)}
+            >
+              <option value="">Select User Type</option>
+              <option value="PARTNER">PARTNER</option>
+              <option value="ENTERPRISE">ENTERPRISE</option>
+            </select>
+
+            <input
+              className="form-control mb-3"
+              placeholder="Mobile number"
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
+              required
+            />
+
+            <input
+              type="firstName"
+              className="form-control mb-3"
+              placeholder="First Name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
+
+            <input
+              type="lastName"
+              className="form-control mb-3"
+              placeholder="First Name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
+
+            <input
+              type="userName"
+              className="form-control mb-3"
+              placeholder="User Name"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              required
+            />
+
+            <input
+              type="email"
+              className="form-control mb-3"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+
+            <input
+              type="password"
+              className="form-control mb-3"
+              placeholder="Create Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+
+            <input
+              type="confirmPassword"
+              className="form-control mb-3"
+              placeholder="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+
+            <button className="btn btn-success w-100" disabled={loading}>
+              {loading ? "Creating..." : "Create Account"}
+            </button>
+          </form>
+        )}
+
       </div>
     </div>
   );

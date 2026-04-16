@@ -4,7 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-import com.hotel.auth.model.User;
+import com.hotel.common.model.User;
 
 @FeignClient(name = "hm-auth-service")
 public interface AuthFeignClient {

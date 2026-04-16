@@ -2,9 +2,9 @@ package com.hotel.auth.service;
 
 import java.util.Optional;
 
-import com.hotel.auth.model.User;
-import com.hotel.auth.model.UserRequest;
-import com.hotel.auth.model.UserWithToken;
+import com.hotel.common.model.User;
+import com.hotel.common.model.UserRequest;
+import com.hotel.common.model.UserWithToken;
 
 public interface UserService {
 
@@ -14,6 +14,5 @@ public interface UserService {
 
 	UserWithToken validateToken(String token);
 
-	Object save(UserRequest userRequest);
-
+	User save(UserRequest userRequest);
 }

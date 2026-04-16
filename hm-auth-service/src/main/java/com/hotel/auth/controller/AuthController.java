@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hotel.auth.config.ConfigProperties;
-import com.hotel.auth.model.HmResponse;
 import com.hotel.auth.model.LogInDetails;
-import com.hotel.auth.model.User;
-import com.hotel.auth.model.UserRequest;
 import com.hotel.auth.security.JwtTokenUtil;
 import com.hotel.auth.service.OtpService;
 import com.hotel.auth.service.UserService;
+import com.hotel.common.model.HmResponse;
+import com.hotel.common.model.User;
+import com.hotel.common.model.UserRequest;
 
 @RestController
 @RequestMapping("/auth")

@@ -36,13 +36,13 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeRequests(auth -> auth
-                .antMatchers("/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html","/validate-token/**").permitAll()
+                .antMatchers("/auth/send-otp/**","/auth/verify-login/**","/auth/login/**","/auth/user/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html","/validate-token/**").permitAll()
                 .anyRequest().authenticated()
             )
             .httpBasic(httpBasic -> httpBasic.disable())
             .formLogin(form -> form.disable())
             .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+		return http.build();
+	}
 }
