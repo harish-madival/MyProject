@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.hotel.common.model.User;
-import com.hotel.common.model.UserWithToken;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.zuul.gateway.feign.AuthFeignClient;
+import com.zuul.gateway.model.User;
+import com.zuul.gateway.model.UserWithToken;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
